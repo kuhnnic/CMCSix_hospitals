@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CMCSix · Bettenverfügbarkeit Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="hero panel">
+      <div>
+        <p class="kicker">CMCSix Dashboard</p>
+        <h1>Spitalbettenverfügbarkeit</h1>
+        <p class="lead">Zentrale, aggregierte Sicht auf freie Betten in umliegenden Spitälern – gefiltert nach Region, Fachgebiet und Bedarf.</p>
+        <div class="status-line">
+          <span id="syncBadge" class="sync-badge"><i></i><span>Verbindung wird geprüft …</span></span>
+          <span id="lastUpdated" class="muted">Noch nicht aktualisiert</span>
+        </div>
+      </div>
+      <div class="hero-card" aria-label="SASIS Stammdaten">
+        <span>SASIS-Stammdaten</span>
+        <strong id="hospitalCount">16</strong>
+        <small>Spitalstandorte · nicht überschrieben</small>
+      </div>
+    </section>
+
+    <section class="tabs" aria-label="Ansichten">
+      <button class="tab active" type="button" data-view="overview">Verfügbarkeit</button>
+      <button class="tab" type="button" data-view="admin">Stammdatenverwaltung</button>
+    </section>
+
+    <section id="overviewView" class="view active">
+      <section class="panel filters-panel">
+        <div class="title-row">
+          <div>
+            <p class="kicker">Standardfilter</p>
+            <h2>Passende Betten finden</h2>
+          </div>
+          <button id="resetFilters" type="button">Filter zurücksetzen</button>
+        </div>
+        <div class="filters-grid">
+          <label class="field">Region
+            <select id="regionFilter"></select>
+          </label>
+          <label class="field">Spital
+            <select id="hospitalFilter"></select>
+          </label>
+          <label class="field">Fachrichtung
+            <select id="specialtyFilter"></select>
+          </label>
+          <label class="field">Telemetriebedarf
+            <select id="telemetryFilter">
+              <option value="all">Alle</option>
+              <option value="yes">Nur mit Monitoring/Telemetrie</option>
+              <option value="no">Ohne Telemetriebedarf</option>
+            </select>
+          </label>
+          <label class="field">Geschlecht
+            <select id="genderFilter">
+              <option value="all">Alle</option>
+              <option value="female">Weiblich</option>
+              <option value="male">Männlich</option>
+              <option value="neutral">Neutral / nicht relevant</option>
+            </select>
+          </label>
+          <label class="field">Suche
+            <input id="searchFilter" type="search" placeholder="Spital, Ort, Fachgebiet …">
+          </label>
+        </div>
+      </section>
+
+      <section id="kpis" class="kpis" aria-live="polite"></section>
+
+      <section class="panel results-panel">
+        <div class="title-row">
+          <div>
+            <p class="kicker">Aggregierte Übersicht</p>
+            <h2>Spitäler mit freien Betten</h2>
+          </div>
+          <span id="resultContext" class="pill"></span>
+        </div>
+        <div id="hospitalResults" class="hospital-results" aria-live="polite"></div>
+      </section>
+    </section>
+
+    <section id="adminView" class="view">
+      <section class="panel admin-panel">
+        <div class="title-row">
+          <div>
+            <p class="kicker">Stammdatenverwaltung</p>
+            <h2>SASIS-Daten ergänzen</h2>
+            <p class="muted compact">SASIS-Felder sind bewusst schreibgeschützt. Gespeichert werden nur Kontaktinformation und Bemerkungen.</p>
+          </div>
+          <span id="profileSync" class="pill">Profile: lokaler Fallback</span>
+        </div>
+        <div class="admin-layout">
+          <aside class="hospital-list" id="adminHospitalList"></aside>
+          <form id="profileForm" class="profile-form">
+            <div id="readonlySasis" class="readonly-sasis"></div>
+            <label class="field">Kontaktinformation
+              <textarea id="contactInfo" rows="5" placeholder="Telefon, E-Mail, Kontaktstelle, Erreichbarkeit …"></textarea>
+            </label>
+            <label class="field">Bemerkungen
+              <textarea id="remarks" rows="5" placeholder="Interne Hinweise, Prozessnotizen, bevorzugte Übergabe …"></textarea>
+            </label>
+            <div class="form-actions">
+              <button class="primary" type="submit">Ergänzungen speichern</button>
+              <button id="clearProfile" class="ghost" type="button">Ergänzungen leeren</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="supabase-config.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="assets/dashboard.js" defer></script>
+</body>
+</html>
