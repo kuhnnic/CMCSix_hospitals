@@ -1,5 +1,5 @@
 window.CMCSIX_SUPABASE_CONFIG = {
-  url: 'https://YOUR_PROJECT_ID.supabase.co',
-  anon: 'YOUR_PUBLIC_VALUE',
+  url: 'https://wlmsbsxgzmkkhwsimcdj.supabase.co',
+  anon: 'sb_publishable_ifDX1hz1pkNcOdrIrg5icw_uVMK11IP',
   table: 'beds'
 };
