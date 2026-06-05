@@ -26,22 +26,22 @@ with hospitals as (
   select
     h.hospital_id,
     s.specialty,
-    s.specialty_index,
-    bed_no,
+    s.specialty_index::int as specialty_index,
+    bed_no::int as bed_no,
     (s.specialty_index::text || lpad(bed_no::text, 2, '0')) as room,
     case when bed_no % 2 = 1 then 'A' else 'B' end as bed,
-    (array['Standardbett','Überwachungsbett','Isolationsbett','Kurzliegerbett','Barrierefreies Bett'])[1 + ((bed_no + s.specialty_index - 1) % 5)] as bed_type,
+    (array['Standardbett','Überwachungsbett','Isolationsbett','Kurzliegerbett','Barrierefreies Bett'])[1 + (((bed_no + s.specialty_index - 1) % 5)::int)] as bed_type,
     case when bed_no % 4 = 0 then 'Überwachung' else 'Normalpflege' end as care,
-    (array['free','free','occupied','reserved','cleaning','blocked','free','occupied'])[1 + ((bed_no + s.specialty_index - 1) % 8)] as status
+    (array['free','free','occupied','reserved','cleaning','blocked','free','occupied'])[1 + (((bed_no + s.specialty_index - 1) % 8)::int)] as status
   from hospitals h
   cross join lateral unnest(h.specialties) with ordinality as s(specialty, specialty_index)
-  cross join lateral generate_series(1, 8 + ((s.specialty_index - 1) % 3)) as bed_no
+  cross join lateral generate_series(1, 8 + (((s.specialty_index - 1) % 3)::int)) as bed_no
 ), prepared as (
   select
     hospital_id || '-' || regexp_replace(lower(translate(specialty, 'äöüÄÖÜéèàÉÈÀ/-', 'aouAOUeeaEEA--')), '[^a-z0-9]+', '-', 'g') || '-' || room as id,
     hospital_id,
     specialty,
-    split_part(specialty, ' ', 1) || ' ' || substr('ABCD', 1 + ((bed_no + specialty_index - 1) % 4), 1) as station,
+    split_part(specialty, ' ', 1) || ' ' || substr('ABCD', (1 + ((bed_no + specialty_index - 1) % 4))::int, 1) as station,
     room,
     bed,
     bed_type as type,
