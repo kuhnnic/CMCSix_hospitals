@@ -16,14 +16,29 @@ create table if not exists public.beds (
   oxygen boolean not null default false,
   monitoring boolean not null default false,
   accessible boolean not null default false,
+  gender text not null default 'unassigned' check (gender in ('unassigned','female','male','diverse')),
   status text not null default 'free' check (status in ('free','reserved','occupied','cleaning','blocked')),
   notes text not null default '',
   updated_at timestamptz not null default now()
 );
 
+alter table public.beds
+add column if not exists gender text not null default 'unassigned';
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'beds_gender_check'
+  ) then
+    alter table public.beds
+    add constraint beds_gender_check check (gender in ('unassigned','female','male','diverse'));
+  end if;
+end $$;
+
 create index if not exists beds_hospital_id_idx on public.beds (hospital_id);
 create index if not exists beds_status_idx on public.beds (status);
 create index if not exists beds_specialty_idx on public.beds (specialty);
+create index if not exists beds_room_gender_idx on public.beds (hospital_id, specialty, room, gender);
 
 create or replace function public.set_updated_at()
 returns trigger
