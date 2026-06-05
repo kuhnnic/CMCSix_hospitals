@@ -2,6 +2,8 @@
 -- Run this once in Supabase SQL Editor before using the app with the shared DB.
 -- MVP note: the policies below allow public anon access because the current app has no login yet.
 -- For production, add Supabase Auth and replace these policies with role-/hospital-based access rules.
+-- Important: Run supabase-sasis-hospitals.sql before this schema when starting from an empty DB,
+-- so beds.hospital_id can be linked to public.sasis_hospitals(id).
 
 create table if not exists public.beds (
   id text primary key,
@@ -32,6 +34,24 @@ begin
   ) then
     alter table public.beds
     add constraint beds_gender_check check (gender in ('unassigned','female','male','diverse'));
+  end if;
+end $$;
+
+do $$
+begin
+  if to_regclass('public.sasis_hospitals') is not null
+     and not exists (
+       select 1
+       from pg_constraint
+       where conname = 'beds_hospital_id_fkey'
+         and conrelid = 'public.beds'::regclass
+     ) then
+    alter table public.beds
+    add constraint beds_hospital_id_fkey
+    foreign key (hospital_id)
+    references public.sasis_hospitals(id)
+    on update cascade
+    on delete restrict;
   end if;
 end $$;
 
