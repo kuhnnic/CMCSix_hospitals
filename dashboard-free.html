@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CMCSix Hospitals · Dashboard freie Betten pro Spital</title>
-<link rel="stylesheet" href="assets/dashboard.css?v=20260608-dashboard-hospital-aggregate">
-<link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260608-dashboard-hospital-aggregate">
+<link rel="stylesheet" href="assets/dashboard.css?v=20260608-dashboard-contact-editor-link">
+<link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260608-dashboard-contact-editor-link">
 </head>
 <body>
 <main class="dash-shell">
@@ -16,6 +16,7 @@
     <p>Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.</p>
     <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
   </div>
+  <nav class="dash-nav"><a class="active" href="dashboard-hospital-contacts.html">Spitalkontakte bearbeiten</a></nav>
 </header>
 <section class="dash-grid">
   <aside class="control-panel">
@@ -36,6 +37,6 @@
 </main>
 <script src="supabase-config.js"></script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="assets/dashboard-free-v3.js?v=20260608-dashboard-hospital-aggregate" defer></script>
+<script src="assets/dashboard-free-v3.js?v=20260608-dashboard-contact-editor-link" defer></script>
 </body>
 </html>
