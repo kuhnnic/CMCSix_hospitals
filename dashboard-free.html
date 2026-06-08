@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CMCSix Hospitals · Dashboard freie Betten</title>
-<link rel="stylesheet" href="assets/dashboard.css?v=20260608-dashboard-free-polish">
-<link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260608-dashboard-free-polish">
+<link rel="stylesheet" href="assets/dashboard.css?v=20260608-dashboard-feature-multi">
+<link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260608-dashboard-feature-multi">
 </head>
 <body>
 <main class="dash-shell">
@@ -24,7 +24,7 @@
     <label>Spital<select id="hospital"><option value="all">Alle Spitäler</option></select></label>
     <label>Fachgebiet<select id="specialty"><option value="all">Alle Fachgebiete</option></select></label>
     <label>Geschlecht<select id="gender"><option value="all">Alle Geschlechter</option></select></label>
-    <label>Eigenschaft<select id="feature"><option value="all">Alle Eigenschaften</option><option value="oxygen">Sauerstoff</option><option value="monitoring">Monitoring</option><option value="isolation">Isolation</option><option value="accessible">Barrierefrei</option></select></label>
+    <div class="feature-field"><span>Eigenschaft</span><div id="featureMulti" class="feature-checks"></div></div>
     <label>Suche<input id="search" placeholder="Spital, Fachgebiet, Bett"></label>
   </aside>
   <section class="dashboard-main">
@@ -36,6 +36,6 @@
 </main>
 <script src="supabase-config.js"></script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="assets/dashboard-free-stable.js?v=20260608-dashboard-free-polish" defer></script>
+<script src="assets/dashboard-free-v3.js?v=20260608-dashboard-feature-multi" defer></script>
 </body>
 </html>
