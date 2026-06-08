@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CMCSix Hospitals · Dashboard freie Betten</title>
-<link rel="stylesheet" href="assets/dashboard.css?v=20260608-dashboard-free-stable">
+<link rel="stylesheet" href="assets/dashboard.css?v=20260608-dashboard-free-isolated">
 </head>
 <body>
 <main class="dash-shell">
@@ -15,11 +15,6 @@
     <p>Live-Übersicht aus Supabase: Es werden ausschliesslich freie Betten geladen und ausgewertet.</p>
     <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
   </div>
-  <nav class="dash-nav">
-    <a href="index.html">Bettenübersicht</a>
-    <a href="manage.html">Verwaltung</a>
-    <a class="active" href="dashboard-free.html">Dashboard</a>
-  </nav>
 </header>
 <section class="dash-grid">
   <aside class="control-panel">
@@ -27,11 +22,9 @@
     <label>Gültigkeitsgebiet<select id="validity"><option value="all">Alle Gültigkeitsgebiete</option></select></label>
     <label>Spital<select id="hospital"><option value="all">Alle Spitäler</option></select></label>
     <label>Fachgebiet<select id="specialty"><option value="all">Alle Fachgebiete</option></select></label>
-    <label>Station<select id="station"><option value="all">Alle Stationen</option></select></label>
     <label>Geschlecht<select id="gender"><option value="all">Alle Geschlechter</option></select></label>
     <label>Eigenschaft<select id="feature"><option value="all">Alle Eigenschaften</option><option value="oxygen">Sauerstoff</option><option value="monitoring">Monitoring</option><option value="isolation">Isolation</option><option value="accessible">Barrierefrei</option></select></label>
-    <label>Zimmer<input id="room" placeholder="z.B. 204"></label>
-    <label>Suche<input id="search" placeholder="Spital, Station, Fachgebiet, Bett"></label>
+    <label>Suche<input id="search" placeholder="Spital, Fachgebiet, Bett"></label>
   </aside>
   <section class="dashboard-main">
     <section id="metrics" class="metric-strip"></section>
@@ -42,6 +35,6 @@
 </main>
 <script src="supabase-config.js"></script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="assets/dashboard-free-stable.js?v=20260608-dashboard-free-stable" defer></script>
+<script src="assets/dashboard-free-stable.js?v=20260608-dashboard-free-isolated" defer></script>
 </body>
 </html>
