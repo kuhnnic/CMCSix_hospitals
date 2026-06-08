@@ -18,6 +18,24 @@ Aktuelle produktive Frontend-Dateien:
 
 Die App zeigt keine lokalen Demo-Betten mehr an. Betten und SASIS-Stammdaten werden aus Supabase gelesen. Änderungen an Status und Geschlecht werden direkt in Supabase gespeichert.
 
+## Datenmodell
+
+Die wichtigsten Entitäten sind jetzt:
+
+- `sasis_hospitals`: Spital-Stammdaten
+- `stations`: Stationen als eigene Identität
+- `beds`: Betten
+
+Beziehungen:
+
+- Ein Spital hat mehrere Stationen.
+- Eine Station gehört genau zu einem Spital.
+- Eine Station ist genau einem Fachgebiet zugeteilt.
+- Eine Station hat mehrere Betten.
+- Ein Bett referenziert seine Station über `station_id`.
+
+Das bisherige Textfeld `beds.station` bleibt als Rückwärtskompatibilität und Anzeige-Fallback bestehen, wird aber per DB-Trigger aus `stations.name` gepflegt.
+
 ## Supabase Setup
 
 Bei einem Neuaufbau der Datenbank die SQL-Dateien in dieser Reihenfolge ausführen:
@@ -27,12 +45,15 @@ Bei einem Neuaufbau der Datenbank die SQL-Dateien in dieser Reihenfolge ausführ
 3. `supabase-link-beds-to-sasis.sql`
 4. `supabase-room-bed-rules.sql`
 5. `supabase-sasis-api-view.sql`
-6. `supabase-reset-seed-beds-current-rules.sql`
+6. `supabase-stations-design.sql`
+7. `supabase-reset-seed-beds-current-rules.sql`
 
 ## Wichtige Regeln
 
 - Ein Spital wird über SASIS-Stammdaten ausgewählt.
-- Betten sind über `hospital_id` mit den SASIS-Spitälern verknüpft.
+- Stationen sind über `hospital_id` mit den SASIS-Spitälern verknüpft.
+- Stationen sind jeweils einem Fachgebiet zugeteilt.
+- Betten sind über `station_id` mit einer Station verknüpft.
 - Pro Zimmer sind maximal 4 Betten erlaubt.
 - Ein Isolationsbett steht immer alleine im Zimmer.
 - `gender` erlaubt `unassigned`, `female`, `male`.
@@ -41,8 +62,12 @@ Bei einem Neuaufbau der Datenbank die SQL-Dateien in dieser Reihenfolge ausführ
 
 ## Aktuelle Seed-Datei
 
-Für Betten ist aktuell nur diese Seed-Datei relevant:
+Für Betten und Stationen ist aktuell diese Seed-Datei relevant:
 
 - `supabase-reset-seed-beds-current-rules.sql`
+
+Die Stationsstruktur selbst wird mit dieser Datei ergänzt:
+
+- `supabase-stations-design.sql`
 
 Ältere Seed- und Reparaturdateien wurden aus dem Repo entfernt.
