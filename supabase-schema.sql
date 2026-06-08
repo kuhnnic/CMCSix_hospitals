@@ -18,24 +18,24 @@ create table if not exists public.beds (
   oxygen boolean not null default false,
   monitoring boolean not null default false,
   accessible boolean not null default false,
-  gender text not null default 'female' check (gender in ('female','male')),
+  gender text not null default 'unassigned' check (gender in ('unassigned','female','male')),
   status text not null default 'free' check (status in ('free','reserved','occupied','cleaning','blocked')),
   notes text not null default '',
   updated_at timestamptz not null default now()
 );
 
 alter table public.beds
-add column if not exists gender text not null default 'female';
+add column if not exists gender text not null default 'unassigned';
 
 update public.beds
-set gender = 'female'
-where gender is null or gender not in ('female','male');
+set gender = 'unassigned'
+where gender is null or gender not in ('unassigned','female','male');
 
 do $$
 begin
   alter table public.beds drop constraint if exists beds_gender_check;
   alter table public.beds
-  add constraint beds_gender_check check (gender in ('female','male'));
+  add constraint beds_gender_check check (gender in ('unassigned','female','male'));
 end $$;
 
 do $$
