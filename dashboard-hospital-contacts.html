@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CMCSix Hospitals · Spitalkontakte bearbeiten</title>
+<link rel="stylesheet" href="assets/dashboard.css?v=20260608-contact-editor">
+<link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260608-contact-editor">
+<link rel="stylesheet" href="assets/dashboard-contacts.css?v=20260608-contact-editor">
+</head>
+<body>
+<main class="dash-shell">
+<header class="dash-hero contact-hero">
+  <div>
+    <p class="dash-kicker">CMCSix Control Center</p>
+    <h1>Spitalkontakte bearbeiten</h1>
+    <p>Dashboard-Stammdatenpflege für Kontakt-Telefon und Bemerkungen. Betten, Stationen und SASIS-Basisdaten bleiben unverändert.</p>
+    <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
+  </div>
+</header>
+
+<section class="contact-layout">
+  <aside class="control-panel">
+    <div class="panel-title"><span>Filter</span><button id="resetFilters" type="button">Zurücksetzen</button></div>
+    <label>Gültigkeitsgebiet<select id="validity"><option value="all">Alle Gültigkeitsgebiete</option></select></label>
+    <label>Spital suchen<input id="search" placeholder="Name, Ort, ZSR"></label>
+    <p class="contact-note">Editierbar sind nur Kontakt-Telefon und Bemerkungen.</p>
+  </aside>
+
+  <section class="dashboard-main">
+    <section id="metrics" class="metric-strip"></section>
+    <section class="table-card">
+      <div class="table-toolbar">
+        <div>
+          <span class="dash-kicker">Dashboard-Stammdaten</span>
+          <h2>SASIS-Spitäler</h2>
+        </div>
+        <small id="listInfo">0 Spitäler</small>
+      </div>
+      <div id="hospitals" class="contact-table" aria-live="polite"></div>
+    </section>
+  </section>
+</section>
+</main>
+<script src="supabase-config.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="assets/dashboard-contacts.js?v=20260608-contact-editor" defer></script>
+</body>
+</html>
