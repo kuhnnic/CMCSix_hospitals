@@ -1,0 +1,82 @@
+/* Overview bed list: show each bed property in its own aligned column */
+#beds.bed-list .bed-list-head,
+#beds.bed-list .bed-list-row {
+  grid-template-columns:
+    minmax(140px, 1.1fr)
+    minmax(150px, 1.15fr)
+    minmax(88px, .72fr)
+    minmax(54px, .45fr)
+    minmax(120px, .9fr)
+    minmax(128px, .95fr)
+    minmax(150px, 1.15fr)
+    minmax(92px, .7fr)
+    minmax(96px, .72fr)
+    minmax(92px, .7fr)
+    minmax(112px, .8fr);
+  align-items: center;
+  min-width: 1320px;
+}
+
+#beds.bed-list .bed-list-head > span,
+#beds.bed-list .bed-list-row > span,
+#beds.bed-list .bed-list-row > strong {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+}
+
+#beds.bed-list .bed-list-head > span {
+  color: var(--muted);
+}
+
+#beds.bed-list .badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 104px;
+  min-width: 104px;
+  max-width: 104px;
+}
+
+#beds.bed-list .prop-cell {
+  justify-content: center;
+  text-align: center;
+  font-weight: 900;
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--muted);
+  min-height: 32px;
+}
+
+#beds.bed-list .prop-cell.yes {
+  color: var(--brand);
+}
+
+#beds.bed-list select {
+  min-width: 112px;
+  padding: .55rem .65rem;
+}
+
+@media(max-width:720px) {
+  #beds.bed-list .bed-list-head {
+    display: none;
+  }
+
+  #beds.bed-list .bed-list-row {
+    grid-template-columns: 1fr;
+    min-width: 0;
+  }
+
+  #beds.bed-list .bed-list-row > span,
+  #beds.bed-list .bed-list-row > strong {
+    display: block;
+    min-height: auto;
+  }
+
+  #beds.bed-list .prop-cell {
+    display: inline-flex;
+    min-width: 104px;
+    margin-right: .35rem;
+  }
+}
