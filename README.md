@@ -8,15 +8,22 @@ Die App läuft über GitHub Pages:
 
 https://kuhnnic.github.io/CMCSix_hospitals/
 
+Ansichten:
+
+- `index.html`: Bettenübersicht und Filteransicht
+- `manage.html`: separate Verwaltung für Stationen und Betten
+
 Aktuelle produktive Frontend-Dateien:
 
 - `index.html`
+- `manage.html`
 - `styles.css`
 - `supabase-config.js`
 - `assets/main-db-loader.js`
 - `assets/main-db.js`
+- `assets/manage.js`
 
-Die App zeigt keine lokalen Demo-Betten mehr an. Betten und SASIS-Stammdaten werden aus Supabase gelesen. Änderungen an Status und Geschlecht werden direkt in Supabase gespeichert.
+Die App zeigt keine lokalen Demo-Betten mehr an. Betten und SASIS-Stammdaten werden aus Supabase gelesen. Änderungen an Status, Geschlecht, Betten und Stationen werden direkt in Supabase gespeichert.
 
 ## Datenmodell
 
@@ -46,7 +53,8 @@ Bei einem Neuaufbau der Datenbank die SQL-Dateien in dieser Reihenfolge ausführ
 4. `supabase-room-bed-rules.sql`
 5. `supabase-sasis-api-view.sql`
 6. `supabase-stations-design.sql`
-7. `supabase-reset-seed-beds-current-rules.sql`
+7. `supabase-stations-management-policies.sql`
+8. `supabase-reset-seed-beds-current-rules.sql`
 
 ## Wichtige Regeln
 
@@ -60,14 +68,15 @@ Bei einem Neuaufbau der Datenbank die SQL-Dateien in dieser Reihenfolge ausführ
 - `occupied` und `reserved` dürfen nicht `unassigned` sein.
 - Freie Betten im selben Zimmer wie belegte/reservierte Betten verwenden denselben Gender-Status.
 
-## Aktuelle Seed-Datei
+## Aktuelle Seed- und Stationsdateien
 
 Für Betten und Stationen ist aktuell diese Seed-Datei relevant:
 
 - `supabase-reset-seed-beds-current-rules.sql`
 
-Die Stationsstruktur selbst wird mit dieser Datei ergänzt:
+Die Stationsstruktur und Schreibrechte werden mit diesen Dateien ergänzt:
 
 - `supabase-stations-design.sql`
+- `supabase-stations-management-policies.sql`
 
 Ältere Seed- und Reparaturdateien wurden aus dem Repo entfernt.
