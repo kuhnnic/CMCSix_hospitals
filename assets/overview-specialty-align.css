@@ -1,0 +1,53 @@
+/* Overview view: make Fachgebiete look like management specialty chips */
+#specs.chips {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+#specs .chip {
+  min-height: 62px;
+  height: 100%;
+  align-items: center;
+}
+
+#specs .chip input {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+#specs .chip span {
+  display: block;
+  min-width: 0;
+  color: var(--text);
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#specs .chip em {
+  display: block;
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+
+#all,
+#none {
+  width: 100%;
+  min-height: 42px;
+  padding: .55rem .7rem;
+  border-color: transparent;
+  background: #334155;
+  color: white;
+  font-weight: 900;
+  font-size: .82rem;
+}
+
+#none {
+  background: #7c2d12;
+}
+
+@media(max-width:720px) {
+  #specs.chips {
+    grid-template-columns: 1fr;
+  }
+}
