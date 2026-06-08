@@ -54,6 +54,43 @@ where st.hospital_id = b.hospital_id
     or b.station_id <> st.id
   );
 
+-- Automatically assign station_id/station for beds inserted by the app.
+create or replace function public.assign_bed_station()
+returns trigger
+language plpgsql
+as $$
+declare
+  selected_station public.stations%rowtype;
+begin
+  if new.station_id is not null and new.station_id <> '' then
+    select * into selected_station
+    from public.stations
+    where id = new.station_id;
+  else
+    select * into selected_station
+    from public.stations
+    where hospital_id = new.hospital_id
+      and specialty = new.specialty
+    order by sort_order, name
+    limit 1;
+  end if;
+
+  if selected_station.id is not null then
+    new.station_id := selected_station.id;
+    new.specialty := selected_station.specialty;
+    new.station := selected_station.name;
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists beds_assign_station on public.beds;
+create trigger beds_assign_station
+before insert or update of station_id, specialty, hospital_id
+on public.beds
+for each row execute function public.assign_bed_station();
+
 alter table public.beds
   drop constraint if exists beds_station_id_fkey;
 
