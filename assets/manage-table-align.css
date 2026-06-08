@@ -1,0 +1,67 @@
+/* Management view: align bed-list header and rows exactly */
+body .bed-list-head,
+body .bed-list-row {
+  grid-template-columns: minmax(150px, 1.15fr) minmax(95px, .75fr) minmax(58px, .45fr) minmax(112px, .85fr) minmax(118px, .9fr) minmax(150px, 1.15fr) minmax(165px, 1.35fr) minmax(108px, auto);
+  align-items: center;
+}
+
+body .bed-list-head > span,
+body .bed-list-row > span,
+body .bed-list-row > strong {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+}
+
+body .bed-list-head > span {
+  color: var(--muted);
+}
+
+body .bed-list-row > strong {
+  font-weight: 900;
+}
+
+body .bed-list-row > span:last-child {
+  justify-content: flex-end;
+}
+
+body .bed-list .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 104px;
+  min-width: 104px;
+  max-width: 104px;
+  text-align: center;
+}
+
+body .bed-list .table-sort {
+  display: flex;
+  align-items: center;
+  min-height: 28px;
+}
+
+body .bed-list-row button[data-edit] {
+  min-width: 96px;
+  text-align: center;
+}
+
+@media(max-width:720px) {
+  body .bed-list-head,
+  body .bed-list-row {
+    grid-template-columns: 1fr;
+    min-width: 0;
+  }
+
+  body .bed-list-row > span,
+  body .bed-list-row > strong {
+    min-height: auto;
+    display: block;
+  }
+
+  body .bed-list .badge {
+    width: auto;
+    min-width: 104px;
+  }
+}
