@@ -14,12 +14,11 @@
 -- - Innerhalb eines Spitals wird jede Zimmernummer nur als ein logisches Zimmer verwendet.
 -- - Pro Zimmer werden 1 bis 4 Betten erzeugt.
 -- - Isolationsbetten stehen immer alleine in einem Zimmer.
--- - Alle Betten im selben Zimmer erhalten dasselbe Geschlecht.
--- - Geschlecht wird befüllt: female oder male.
+-- - Alle Betten im selben Zimmer erhalten denselben Gender-Status.
+-- - Gender wird befüllt: unassigned, female oder male.
 
 begin;
 
--- Reihenfolge ist wegen Foreign Key wichtig.
 delete from public.beds;
 delete from public.sasis_hospitals;
 
@@ -44,23 +43,17 @@ insert into public.sasis_hospitals (
 ('stg-muensterlingen','Spital Thurgau AG','Spitalcampus 1','8596 Münsterlingen','Thurgau','Spitäler','Zentrumsversorgung, Niveau 2','X714320',array['Innere Medizin','Chirurgie','Notfall','Intensivpflege','Geburtshilfe','Pädiatrie','Orthopädie','Kardiologie'],160);
 
 with hospital_specialties as (
-  select
-    h.id as hospital_id,
-    h.name as hospital_name,
-    h.validity_area,
-    h.partner_subgroup,
-    s.specialty,
-    s.specialty_index::int as specialty_index
+  select h.id as hospital_id, h.name as hospital_name, h.validity_area, h.partner_subgroup, s.specialty, s.specialty_index::int as specialty_index
   from public.sasis_hospitals h
   cross join lateral unnest(h.specialties) with ordinality as s(specialty, specialty_index)
 ), room_templates as (
   select * from (values
     -- room_variant, bed_count, gender, isolation_room, room_kind
-    (1, 1, 'female', true,  'Isolationszimmer'),
-    (2, 2, 'female', false, 'Zweibettzimmer'),
-    (3, 2, 'male',   false, 'Zweibettzimmer'),
-    (4, 4, 'female', false, 'Vierbettzimmer'),
-    (5, 1, 'male',   false, 'Einbettzimmer')
+    (1, 1, 'unassigned', true,  'Isolationszimmer'),
+    (2, 2, 'female',     false, 'Zweibettzimmer'),
+    (3, 2, 'male',       false, 'Zweibettzimmer'),
+    (4, 4, 'female',     false, 'Vierbettzimmer'),
+    (5, 1, 'unassigned', false, 'Einbettzimmer')
   ) as rt(room_variant, bed_count, gender, isolation_room, room_kind)
 ), rooms as (
   select
@@ -72,8 +65,6 @@ with hospital_specialties as (
     rt.gender,
     rt.isolation_room,
     rt.room_kind,
-    -- Zimmernummer ist innerhalb des Spitals eindeutig:
-    -- specialty_index 1 + room_variant 1 = 101, specialty_index 2 + room_variant 1 = 201 usw.
     (hs.specialty_index::text || lpad(rt.room_variant::text, 2, '0')) as room
   from hospital_specialties hs
   cross join room_templates rt
@@ -94,13 +85,8 @@ with hospital_specialties as (
       when r.room_variant = 4 and bed_no = 4 then 'Kurzliegerbett'
       else 'Standardbett'
     end as type,
-    case
-      when r.room_variant = 2 and bed_no = 1 then 'Überwachung'
-      else 'Normalpflege'
-    end as care,
-    (array['free','reserved','occupied','cleaning','blocked','free','occupied','free'])[
-      1 + (((r.specialty_index + r.room_variant + bed_no - 3) % 8)::int)
-    ] as status
+    case when r.room_variant = 2 and bed_no = 1 then 'Überwachung' else 'Normalpflege' end as care,
+    (array['free','reserved','occupied','cleaning','blocked','free','occupied','free'])[1 + (((r.specialty_index + r.room_variant + bed_no - 3) % 8)::int)] as status
   from rooms r
   cross join lateral generate_series(1, r.bed_count) as gs(bed_no)
 ), prepared as (
@@ -108,9 +94,7 @@ with hospital_specialties as (
     hospital_id || '-' || room || '-' || bed as id,
     hospital_id,
     specialty,
-    split_part(specialty, ' ', 1)
-      || ' '
-      || substr('ABCD', (1 + ((specialty_index - 1) % 4))::int, 1) as station,
+    split_part(specialty, ' ', 1) || ' ' || substr('ABCD', (1 + ((specialty_index - 1) % 4))::int, 1) as station,
     room,
     bed,
     type,
@@ -123,78 +107,45 @@ with hospital_specialties as (
     status,
     case
       when isolation_room then 'Seed: Isolationszimmer, Einzelbelegung'
-      when room_variant = 4 then 'Seed: Mehrbettzimmer, gleiches Geschlecht'
+      when room_variant = 4 then 'Seed: Mehrbettzimmer, gleicher Gender-Status'
       else ''
     end as notes
   from generated_beds
 )
 insert into public.beds (
-  id,
-  hospital_id,
-  specialty,
-  station,
-  room,
-  bed,
-  type,
-  care,
-  isolation,
-  oxygen,
-  monitoring,
-  accessible,
-  gender,
-  status,
-  notes
+  id, hospital_id, specialty, station, room, bed, type, care,
+  isolation, oxygen, monitoring, accessible, gender, status, notes
 )
 select
-  id,
-  hospital_id,
-  specialty,
-  station,
-  room,
-  bed,
-  type,
-  care,
-  isolation,
-  oxygen,
-  monitoring,
-  accessible,
-  gender,
-  status,
-  notes
+  id, hospital_id, specialty, station, room, bed, type, care,
+  isolation, oxygen, monitoring, accessible, gender, status, notes
 from prepared
 order by hospital_id, specialty, room, bed;
 
 commit;
 
 -- Kontrollen nach dem Reset
-
--- 1) Anzahl Spitäler
 select count(*) as sasis_hospitals from public.sasis_hospitals;
 
--- 2) Betten pro Spital
-select
-  h.id as hospital_id,
-  h.name,
-  h.validity_area,
-  count(b.id) as beds
+select h.id as hospital_id, h.name, h.validity_area, count(b.id) as beds
 from public.sasis_hospitals h
 left join public.beds b on b.hospital_id = h.id
 group by h.id, h.name, h.validity_area, h.sort_order
 order by h.sort_order, h.name;
 
--- 3) Ungültige hospital_id in beds. Sollte 0 Zeilen liefern.
+-- Sollte 0 Zeilen liefern.
 select distinct b.hospital_id
 from public.beds b
 left join public.sasis_hospitals h on h.id = b.hospital_id
 where h.id is null;
 
--- 4) Zimmer mit mehr als 4 Betten. Sollte 0 Zeilen liefern.
+-- Sollte 0 Zeilen liefern.
 select hospital_id, room, count(*) as bed_count
 from public.beds
 group by hospital_id, room
 having count(*) > 4;
 
--- 5) Isolationszimmer mit mehr als 1 Bett. Sollte 0 Zeilen liefern.
+-- Sollte 0 Zeilen liefern.
 select hospital_id, room, count(*) as bed_count
 from public.beds
 where (hospital_id, room) in (
@@ -205,19 +156,19 @@ where (hospital_id, room) in (
 group by hospital_id, room
 having count(*) > 1;
 
--- 6) Zimmer mit gemischtem Geschlecht. Sollte 0 Zeilen liefern.
+-- Sollte 0 Zeilen liefern.
 select hospital_id, room, count(distinct gender) as genders
 from public.beds
 group by hospital_id, room
 having count(distinct gender) > 1;
 
--- 7) Doppelte Bett-ID innerhalb eines Spitals. Sollte 0 Zeilen liefern.
+-- Sollte 0 Zeilen liefern.
 select hospital_id, id, count(*) as duplicates
 from public.beds
 group by hospital_id, id
 having count(*) > 1;
 
--- 8) Ungültige Geschlechter. Sollte 0 Zeilen liefern.
+-- Sollte 0 Zeilen liefern.
 select id, hospital_id, gender
 from public.beds
-where gender not in ('female','male');
+where gender not in ('unassigned','female','male');
