@@ -15,7 +15,7 @@
 -- - Pro Zimmer werden 1 bis 4 Betten erzeugt.
 -- - Isolationsbetten stehen immer alleine in einem Zimmer.
 -- - Alle Betten im selben Zimmer erhalten dasselbe Geschlecht.
--- - Geschlecht wird befüllt: female, male oder diverse.
+-- - Geschlecht wird befüllt: female oder male.
 
 begin;
 
@@ -60,7 +60,7 @@ with hospital_specialties as (
     (2, 2, 'female', false, 'Zweibettzimmer'),
     (3, 2, 'male',   false, 'Zweibettzimmer'),
     (4, 4, 'female', false, 'Vierbettzimmer'),
-    (5, 1, 'diverse',false, 'Einbettzimmer')
+    (5, 1, 'male',   false, 'Einbettzimmer')
   ) as rt(room_variant, bed_count, gender, isolation_room, room_kind)
 ), rooms as (
   select
@@ -216,3 +216,8 @@ select hospital_id, id, count(*) as duplicates
 from public.beds
 group by hospital_id, id
 having count(*) > 1;
+
+-- 8) Ungültige Geschlechter. Sollte 0 Zeilen liefern.
+select id, hospital_id, gender
+from public.beds
+where gender not in ('female','male');
