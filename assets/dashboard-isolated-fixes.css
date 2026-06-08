@@ -1,0 +1,29 @@
+/* Isolated free-beds dashboard fixes */
+.control-panel {
+  overflow: hidden;
+}
+
+.control-panel label {
+  min-width: 0;
+  width: 100%;
+}
+
+.control-panel select,
+.control-panel input {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
+}
+
+.control-panel select {
+  text-overflow: ellipsis;
+}
+
+.status-bars {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.status-bars .status-tile:nth-child(n+2) {
+  display: none;
+}
