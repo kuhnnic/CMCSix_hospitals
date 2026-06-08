@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CMCSix Hospitals · Dashboard</title>
+<link rel="stylesheet" href="assets/dashboard.css?v=20260608-dashboard-db-v1">
+</head>
+<body>
+<main class="dash-shell">
+<header class="dash-hero">
+  <div>
+    <p class="dash-kicker">CMCSix Control Center</p>
+    <h1>Dashboard Spitalbetten</h1>
+    <p>Live-Übersicht aus Supabase: Gültigkeitsgebiet, Spital, Station, Fachgebiet und Bettstatus.</p>
+    <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
+  </div>
+  <nav class="dash-nav">
+    <a href="index.html">Bettenübersicht</a>
+    <a href="manage.html">Verwaltung</a>
+    <a class="active" href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<section class="dash-grid">
+  <aside class="control-panel">
+    <div class="panel-title">
+      <span>Filter</span>
+      <button id="resetFilters" type="button">Zurücksetzen</button>
+    </div>
+    <label>Gültigkeitsgebiet<select id="validity"><option value="all">Alle Gültigkeitsgebiete</option></select></label>
+    <label>Spital<select id="hospital"><option value="all">Alle Spitäler</option></select></label>
+    <label>Fachgebiet<select id="specialty"><option value="all">Alle Fachgebiete</option></select></label>
+    <label>Station<select id="station"><option value="all">Alle Stationen</option></select></label>
+    <label>Status<select id="status"><option value="all">Alle Status</option></select></label>
+    <label>Geschlecht<select id="gender"><option value="all">Alle Geschlechter</option></select></label>
+    <label>Eigenschaft<select id="feature"><option value="all">Alle Eigenschaften</option><option value="oxygen">Sauerstoff</option><option value="monitoring">Monitoring</option><option value="isolation">Isolation</option><option value="accessible">Barrierefrei</option></select></label>
+    <label>Zimmer<input id="room" placeholder="z.B. 204"></label>
+    <label>Suche<input id="search" placeholder="Spital, Station, Fachgebiet, Bett"></label>
+  </aside>
+
+  <section class="dashboard-main">
+    <section id="metrics" class="metric-strip"></section>
+    <section class="status-band">
+      <div class="band-title"><span>Statusverteilung</span><small id="contextLabel">Keine Filter aktiv</small></div>
+      <div id="statusBars" class="status-bars"></div>
+    </section>
+    <section class="table-card">
+      <div class="table-toolbar">
+        <div>
+          <span class="dash-kicker">Live-Liste</span>
+          <h2>Spitalbetten</h2>
+        </div>
+        <small id="listInfo">0 Betten</small>
+      </div>
+      <div id="beds" class="dash-table" aria-live="polite"></div>
+    </section>
+  </section>
+</section>
+</main>
+<script src="supabase-config.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="assets/dashboard.js?v=20260608-dashboard-db-v1" defer></script>
+</body>
+</html>
