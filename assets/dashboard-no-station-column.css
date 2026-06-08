@@ -1,0 +1,23 @@
+.dash-head.aggregate-head,
+.dash-row.aggregate-row {
+  grid-template-columns:
+    minmax(130px, .9fr)
+    minmax(260px, 1.55fr)
+    minmax(120px, .8fr)
+    minmax(230px, 1.35fr)
+    minmax(190px, 1.1fr)
+    minmax(330px, 1.7fr);
+  min-width: 1250px;
+}
+
+.dash-head.aggregate-head > span:nth-child(4),
+.dash-row.aggregate-row > span:nth-child(4) {
+  display: none;
+}
+
+@media(max-width:760px) {
+  .dash-row.aggregate-row {
+    grid-template-columns: 1fr;
+    min-width: 0;
+  }
+}
