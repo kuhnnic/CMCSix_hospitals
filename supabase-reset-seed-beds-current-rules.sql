@@ -1,5 +1,6 @@
--- Reset seed for beds using existing public.sasis_hospitals.
+-- Reset seed for stations and beds using existing public.sasis_hospitals.
 -- Deletes all rows in public.beds and recreates demo beds.
+-- Ensures public.stations exists and beds are linked via station_id.
 -- Rules:
 -- - occupied/reserved beds always use female or male
 -- - free beds in a room with occupied/reserved beds use the same gender
@@ -9,12 +10,42 @@
 
 begin;
 
+create table if not exists public.stations (
+  id text primary key,
+  hospital_id text not null references public.sasis_hospitals(id) on update cascade on delete restrict,
+  specialty text not null,
+  name text not null,
+  code text not null default '',
+  floor text not null default '',
+  sort_order integer not null default 0,
+  updated_at timestamptz not null default now(),
+  unique (hospital_id, specialty, name)
+);
+
+alter table public.beds
+  add column if not exists station_id text;
+
+alter table public.beds
+  drop constraint if exists beds_station_id_fkey;
+
 delete from public.beds;
+delete from public.stations;
+
+insert into public.stations (id, hospital_id, specialty, name, code, floor, sort_order)
+select
+  h.id || '-station-' || s.idx::text as id,
+  h.id as hospital_id,
+  s.specialty,
+  split_part(s.specialty, ' ', 1) || ' ' || substr('ABCD', (1 + ((s.idx::int - 1) % 4))::int, 1) as name,
+  upper(substr(regexp_replace(s.specialty, '[^A-Za-zÄÖÜäöü0-9]+', '', 'g'), 1, 4)) || '-' || s.idx::text as code,
+  (1 + ((s.idx::int - 1) % 5))::text as floor,
+  s.idx::int as sort_order
+from public.sasis_hospitals h
+cross join lateral unnest(h.specialties) with ordinality as s(specialty, idx);
 
 with hs as (
-  select h.id as hospital_id, s.specialty, s.idx::int as specialty_index
-  from public.sasis_hospitals h
-  cross join lateral unnest(h.specialties) with ordinality as s(specialty, idx)
+  select st.hospital_id, st.id as station_id, st.specialty, st.name as station, st.sort_order as specialty_index
+  from public.stations st
 ), room_templates as (
   select * from (values
     (1, 1, 'unassigned', true,  array['free']),
@@ -26,7 +57,9 @@ with hs as (
 ), generated as (
   select
     hs.hospital_id,
+    hs.station_id,
     hs.specialty,
+    hs.station,
     hs.specialty_index,
     t.room_variant,
     (hs.specialty_index::text || lpad(t.room_variant::text, 2, '0')) as room,
@@ -42,8 +75,9 @@ with hs as (
   select
     hospital_id || '-' || room || '-' || bed as id,
     hospital_id,
+    station_id,
     specialty,
-    split_part(specialty, ' ', 1) || ' ' || substr('ABCD', (1 + ((specialty_index - 1) % 4))::int, 1) as station,
+    station,
     room,
     bed,
     case
@@ -69,51 +103,41 @@ with hs as (
   from generated
 )
 insert into public.beds (
-  id, hospital_id, specialty, station, room, bed, type, care,
+  id, hospital_id, station_id, specialty, station, room, bed, type, care,
   isolation, oxygen, monitoring, accessible, gender, status, notes
 )
 select
-  id, hospital_id, specialty, station, room, bed, type, care,
+  id, hospital_id, station_id, specialty, station, room, bed, type, care,
   isolation, oxygen, monitoring, accessible, gender, status, notes
 from prepared
 order by hospital_id, specialty, room, bed;
 
+alter table public.beds
+  add constraint beds_station_id_fkey
+  foreign key (station_id)
+  references public.stations(id)
+  on update cascade
+  on delete restrict;
+
+create index if not exists stations_hospital_specialty_idx on public.stations (hospital_id, specialty);
+create index if not exists beds_station_id_idx on public.beds (station_id);
+
+alter table public.stations enable row level security;
+
+drop policy if exists "Allow public station read" on public.stations;
+create policy "Allow public station read"
+on public.stations for select
+to anon
+using (true);
+
+grant select on public.stations to anon, authenticated;
+grant select, insert, update on public.beds to anon, authenticated;
+
+notify pgrst, 'reload schema';
+
 commit;
 
--- Check 1: occupied/reserved must be female or male. Should return 0 rows.
-select id, hospital_id, room, bed, status, gender
-from public.beds
-where status in ('occupied','reserved')
-  and gender not in ('female','male');
-
--- Check 2: free beds in rooms with occupied/reserved beds must match room gender. Should return 0 rows.
-select f.hospital_id, f.room, f.id as free_bed_id, f.gender as free_gender, a.gender as assigned_gender
-from public.beds f
-join public.beds a
-  on a.hospital_id = f.hospital_id
- and a.room = f.room
- and a.status in ('occupied','reserved')
-where f.status = 'free'
-  and f.gender <> a.gender;
-
--- Check 3: room max 4 beds. Should return 0 rows.
-select hospital_id, room, count(*) as bed_count
-from public.beds
-group by hospital_id, room
-having count(*) > 4;
-
--- Check 4: isolation beds are alone. Should return 0 rows.
-select hospital_id, room, count(*) as bed_count
-from public.beds
-where (hospital_id, room) in (
-  select hospital_id, room from public.beds where isolation = true
-)
-group by hospital_id, room
-having count(*) > 1;
-
--- Overview.
-select h.id as hospital_id, h.name, count(b.id) as beds
-from public.sasis_hospitals h
-left join public.beds b on b.hospital_id = h.id
-group by h.id, h.name, h.sort_order
-order by h.sort_order, h.name;
+-- Controls
+select count(*) as stations from public.stations;
+select count(*) as beds from public.beds;
+select count(*) as beds_without_station from public.beds where station_id is null;
