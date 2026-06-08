@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CMCSix Hospitals · Dashboard freie Betten</title>
-<link rel="stylesheet" href="assets/dashboard.css?v=20260608-dashboard-feature-multi">
-<link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260608-dashboard-feature-multi">
+<title>CMCSix Hospitals · Dashboard freie Betten pro Spital</title>
+<link rel="stylesheet" href="assets/dashboard.css?v=20260608-dashboard-hospital-aggregate">
+<link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260608-dashboard-hospital-aggregate">
 </head>
 <body>
 <main class="dash-shell">
 <header class="dash-hero">
   <div>
     <p class="dash-kicker">CMCSix Control Center</p>
-    <h1>Dashboard freie Spitalbetten</h1>
-    <p>Live-Übersicht aus Supabase: Es werden ausschliesslich freie Betten geladen und ausgewertet.</p>
+    <h1>Freie Betten pro Spital</h1>
+    <p>Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.</p>
     <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
   </div>
 </header>
@@ -25,17 +25,17 @@
     <label>Fachgebiet<select id="specialty"><option value="all">Alle Fachgebiete</option></select></label>
     <label>Geschlecht<select id="gender"><option value="all">Alle Geschlechter</option></select></label>
     <div class="feature-field"><span>Eigenschaft</span><div id="featureMulti" class="feature-checks"></div></div>
-    <label>Suche<input id="search" placeholder="Spital, Fachgebiet, Bett"></label>
+    <label>Suche<input id="search" placeholder="Spital, Fachgebiet, Gültigkeitsgebiet"></label>
   </aside>
   <section class="dashboard-main">
     <section id="metrics" class="metric-strip"></section>
-    <section class="status-band"><div class="band-title"><span>Verfügbarkeit</span><small id="contextLabel">Nur freie Betten</small></div><div id="statusBars" class="status-bars"></div></section>
-    <section class="table-card"><div class="table-toolbar"><div><span class="dash-kicker">Live-Liste</span><h2>Freie Spitalbetten</h2></div><small id="listInfo">0 freie Betten</small></div><div id="beds" class="dash-table" aria-live="polite"></div></section>
+    <section class="status-band"><div class="band-title"><span>Verfügbarkeit</span><small id="contextLabel">Nur freie Betten · Aggregation pro Spital</small></div><div id="statusBars" class="status-bars"></div></section>
+    <section class="table-card"><div class="table-toolbar"><div><span class="dash-kicker">Aggregierte Live-Liste</span><h2>Spitäler mit freien Betten</h2></div><small id="listInfo">0 Spitäler · 0 freie Betten</small></div><div id="beds" class="dash-table" aria-live="polite"></div></section>
   </section>
 </section>
 </main>
 <script src="supabase-config.js"></script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="assets/dashboard-free-v3.js?v=20260608-dashboard-feature-multi" defer></script>
+<script src="assets/dashboard-free-v3.js?v=20260608-dashboard-hospital-aggregate" defer></script>
 </body>
 </html>
