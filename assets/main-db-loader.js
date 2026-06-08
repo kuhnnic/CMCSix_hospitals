@@ -8,7 +8,7 @@ if (legacyLeftStatus) {
 }
 
 const cmcsixScript = document.createElement('script');
-cmcsixScript.src = 'assets/main-db.js?v=20260608-overview-list-v1';
+cmcsixScript.src = 'assets/main-db.js?v=20260608-overview-prop-columns';
 cmcsixScript.async = false;
 cmcsixScript.onload = () => {
   if (typeof window.init === 'function') window.init();
