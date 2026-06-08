@@ -1,5 +1,6 @@
 window.CMCSIX_SUPABASE_CONFIG = {
-  url: 'https://wlmsbsxgzmkkhwsimcdj.supabase.co',
-  anon: 'sb_publishable_ifDX1hz1pkNcOdrIrg5icw_uVMK11IP',
-  table: 'beds'
+  url: 'https://YOUR_PROJECT_ID.supabase.co',
+  anon: 'YOUR_SUPABASE_PUBLISHABLE_KEY',
+  table: 'beds',
+  hospitalTable: 'sasis_hospitals_api'
 };
