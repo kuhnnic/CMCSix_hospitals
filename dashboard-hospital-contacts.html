@@ -4,20 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CMCSix Hospitals · Spitalkontakte bearbeiten</title>
-<link rel="stylesheet" href="assets/dashboard.css?v=20260608-contact-back-button">
-<link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260608-contact-back-button">
-<link rel="stylesheet" href="assets/dashboard-contacts.css?v=20260608-contact-back-button">
+<link rel="stylesheet" href="assets/dashboard.css?v=20260609-contacts-cmc-theme">
+<link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260609-contacts-cmc-theme">
+<link rel="stylesheet" href="assets/dashboard-contacts.css?v=20260609-contacts-cmc-theme">
+<link rel="stylesheet" href="assets/dashboard-cmc-theme.css?v=20260609-contacts-cmc-theme">
 </head>
 <body>
 <main class="dash-shell">
 <header class="dash-hero contact-hero">
-  <div>
-    <p class="dash-kicker">CMCSix Control Center</p>
-    <h1>Spitalkontakte bearbeiten</h1>
-    <p>Dashboard-Stammdatenpflege für Kontakt-Telefon und Bemerkungen. Betten, Stationen und SASIS-Basisdaten bleiben unverändert.</p>
-    <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
+  <div class="dash-hero-brand">
+    <div class="dash-logo-wrap"><img src="assets/cmc-logo.svg?v=20260609-contacts-cmc-theme" alt="CMC Care Map Capacity" class="dash-logo"></div>
+    <div class="dash-hero-copy">
+      <p class="dash-kicker">CMCSix Control Center</p>
+      <h1>Spitalkontakte bearbeiten</h1>
+      <p>Dashboard-Stammdatenpflege für Kontakt-Telefon und Bemerkungen. Betten, Stationen und SASIS-Basisdaten bleiben unverändert.</p>
+      <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
+    </div>
   </div>
-  <nav class="dash-nav"><a class="active" href="dashboard-free.html?v=dashboard-hospital-aggregate">← Zurück zum Dashboard</a></nav>
+  <nav class="dash-nav"><a class="active" href="dashboard-free.html?v=dashboard-cmc-theme-logo-fixed">← Zurück zum Dashboard</a></nav>
 </header>
 
 <section class="contact-layout">
@@ -45,6 +49,6 @@
 </main>
 <script src="supabase-config.js"></script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="assets/dashboard-contacts.js?v=20260608-contact-back-button" defer></script>
+<script src="assets/dashboard-contacts.js?v=20260609-contacts-cmc-theme" defer></script>
 </body>
 </html>
