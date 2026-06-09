@@ -1,0 +1,194 @@
+/* CMC logo matched dashboard theme */
+:root {
+  --bg: #07111f;
+  --panel: #0f1f33;
+  --panel2: #0b1728;
+  --line: rgba(56, 189, 248, .24);
+  --text: #e8f7ff;
+  --muted: #9ab4c9;
+  --accent: #0ea5e9;
+  --accent2: #22c55e;
+  --good: #22c55e;
+  --warn: #f59e0b;
+  --bad: #ef4444;
+  --info: #06b6d4;
+  --blocked: #64748b;
+  --cmc-red: #ef233c;
+  --cmc-blue: #0369a1;
+  --cmc-teal: #0891b2;
+  --cmc-green: #16a34a;
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 4%, rgba(34,197,94,.16), transparent 28rem),
+    radial-gradient(circle at 80% 0%, rgba(14,165,233,.18), transparent 34rem),
+    linear-gradient(135deg, #05111f 0%, #071827 48%, #0c2a2d 100%);
+}
+
+.dash-shell {
+  width: min(1760px, calc(100% - 32px));
+}
+
+.dash-hero {
+  border-color: rgba(56,189,248,.34);
+  background:
+    radial-gradient(circle at 12% 15%, rgba(34,197,94,.18), transparent 28rem),
+    radial-gradient(circle at 54% 5%, rgba(14,165,233,.22), transparent 36rem),
+    linear-gradient(145deg, rgba(9,31,50,.98), rgba(4,17,31,.98));
+  box-shadow: 0 34px 120px rgba(2, 132, 199, .18), 0 28px 80px rgba(0,0,0,.5);
+}
+
+.dash-logo-wrap {
+  border-color: rgba(14,165,233,.34);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255,255,255,.98), rgba(240,249,255,.96) 42%, rgba(209,250,229,.86) 100%);
+  box-shadow: 0 22px 65px rgba(2,132,199,.22), inset 0 0 0 1px rgba(255,255,255,.78);
+}
+
+.dash-kicker {
+  color: #67e8f9;
+}
+
+.dash-hero h1 {
+  background: linear-gradient(90deg, #e0f2fe 0%, #7dd3fc 42%, #86efac 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+.dash-nav a {
+  border-color: rgba(56,189,248,.28);
+  background: rgba(7,18,33,.86);
+}
+
+.dash-nav a.active,
+.panel-title button,
+button.hospital-detail-close {
+  background: linear-gradient(135deg, var(--cmc-blue), var(--cmc-teal));
+  border-color: rgba(103,232,249,.35);
+  color: #ecfeff;
+  box-shadow: 0 10px 26px rgba(14,165,233,.22);
+}
+
+.sync,
+.control-panel,
+.status-band,
+.table-card,
+.metric,
+.status-tile,
+.dash-row,
+.detail-section,
+.detail-item {
+  border-color: rgba(56,189,248,.20);
+}
+
+.sync.ok {
+  color: #bbf7d0;
+  border-color: rgba(34,197,94,.34);
+}
+
+.control-panel,
+.status-band,
+.table-card {
+  background: rgba(6, 22, 39, .82);
+  box-shadow: 0 26px 76px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+.metric {
+  background:
+    linear-gradient(150deg, rgba(8,40,64,.96), rgba(5,21,38,.96));
+}
+
+.metric:before {
+  height: 4px;
+  background: linear-gradient(90deg, var(--cmc-red), var(--cmc-blue), var(--cmc-green));
+}
+
+.metric strong,
+.band-title span,
+.table-toolbar h2 {
+  color: #e0f2fe;
+}
+
+.status-tile {
+  background: linear-gradient(145deg, rgba(9,31,50,.98), rgba(7,26,43,.98));
+}
+
+.bar.free i {
+  background: linear-gradient(90deg, var(--cmc-teal), var(--cmc-green));
+}
+
+.dash-head {
+  background: linear-gradient(90deg, rgba(3,105,161,.28), rgba(8,145,178,.20));
+  color: #bae6fd;
+  border-color: rgba(56,189,248,.24);
+}
+
+.dash-row {
+  background: rgba(8, 28, 48, .88);
+}
+
+.aggregate-row:hover {
+  background: rgba(8, 47, 73, .95);
+  border-color: rgba(34,197,94,.48);
+  box-shadow: 0 14px 34px rgba(34,197,94,.09);
+}
+
+.count-pill,
+.badge.free {
+  background: linear-gradient(135deg, #047857, #16a34a);
+  color: #ecfdf5;
+  box-shadow: 0 8px 18px rgba(34,197,94,.18);
+}
+
+.prop.yes,
+.feature-chip.active {
+  border-color: rgba(34,197,94,.42);
+  color: #bbf7d0;
+  background: rgba(20,83,45,.55);
+}
+
+.feature-chip {
+  background: rgba(7,24,42,.88);
+  border-color: rgba(56,189,248,.22);
+}
+
+.feature-chip em {
+  color: #7dd3fc;
+}
+
+.hospital-detail-card {
+  border-color: rgba(56,189,248,.28);
+  background:
+    radial-gradient(circle at top left, rgba(14,165,233,.15), transparent 26rem),
+    linear-gradient(145deg, #08192b, #04111f);
+}
+
+.hospital-detail-head {
+  border-bottom-color: rgba(56,189,248,.22);
+}
+
+.detail-section h3 {
+  color: #67e8f9;
+}
+
+.detail-count {
+  background: linear-gradient(135deg, #047857, #16a34a);
+  color: #ecfdf5;
+}
+
+input:focus,
+select:focus,
+button:focus-visible,
+.aggregate-row:focus-visible {
+  outline: 2px solid rgba(34,197,94,.65);
+  outline-offset: 2px;
+}
+
+@media(max-width:760px) {
+  .dash-hero h1 {
+    font-size: clamp(2rem, 13vw, 3.4rem);
+  }
+}
