@@ -1,0 +1,146 @@
+.aggregate-row {
+  cursor: pointer;
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+}
+
+.aggregate-row:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent2);
+  background: #12203a;
+}
+
+.hospital-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(2, 6, 23, .78);
+  backdrop-filter: blur(10px);
+}
+
+.hospital-detail-backdrop.open {
+  display: flex;
+}
+
+.hospital-detail-card {
+  width: min(980px, 100%);
+  max-height: min(86vh, 920px);
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: linear-gradient(145deg, #111827, #07101f);
+  box-shadow: 0 30px 120px #000b;
+}
+
+.hospital-detail-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hospital-detail-head h2 {
+  margin: .2rem 0 .4rem;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  letter-spacing: -.04em;
+}
+
+.hospital-detail-head p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.hospital-detail-close {
+  flex: 0 0 auto;
+  background: #3b1d0d;
+  color: #fed7aa;
+  border-color: #7c2d12;
+  font-weight: 950;
+}
+
+.hospital-detail-body {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+}
+
+.detail-section {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #0b1220;
+  padding: 18px;
+}
+
+.detail-section h3 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.detail-item {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  background: #0f172a;
+}
+
+.detail-item span {
+  display: block;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: .35rem;
+}
+
+.detail-item strong,
+.detail-item p {
+  display: block;
+  margin: 0;
+  color: var(--text);
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.detail-count {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 84px;
+  padding: .55rem .9rem;
+  border-radius: 999px;
+  background: #064e3b;
+  color: #bbf7d0;
+  font-size: 1.35rem;
+  font-weight: 950;
+}
+
+@media(max-width:760px) {
+  .hospital-detail-backdrop {
+    padding: 10px;
+  }
+
+  .hospital-detail-head,
+  .hospital-detail-body {
+    padding: 16px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
