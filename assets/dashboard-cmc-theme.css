@@ -144,7 +144,8 @@ button.hospital-detail-close {
 }
 
 .prop.yes,
-.feature-chip.active {
+.feature-chip.active,
+.feature-option.active {
   border-color: rgba(34,197,94,.42);
   color: #bbf7d0;
   background: rgba(20,83,45,.55);
@@ -157,6 +158,99 @@ button.hospital-detail-close {
 
 .feature-chip em {
   color: #7dd3fc;
+}
+
+.feature-checks {
+  display: block;
+}
+
+.feature-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.feature-dropdown summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 46px;
+  padding: .75rem .8rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(7,24,42,.88);
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+}
+
+.feature-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.feature-dropdown summary span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feature-dropdown summary em {
+  flex: 0 0 auto;
+  min-width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--cmc-blue), var(--cmc-green));
+  color: #ecfeff;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.feature-dropdown-menu {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(6, 22, 39, .98);
+  box-shadow: 0 18px 46px rgba(0,0,0,.34);
+}
+
+.feature-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 38px;
+  padding: .5rem .55rem;
+  border: 1px solid rgba(56,189,248,.18);
+  border-radius: 12px;
+  background: rgba(7,24,42,.72);
+  color: var(--text);
+}
+
+.feature-option input {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.feature-option span {
+  flex: 1;
+  min-width: 0;
+}
+
+.feature-option em {
+  color: #7dd3fc;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.feature-option.disabled {
+  opacity: .45;
 }
 
 .hospital-detail-card {
@@ -182,7 +276,8 @@ button.hospital-detail-close {
 input:focus,
 select:focus,
 button:focus-visible,
-.aggregate-row:focus-visible {
+.aggregate-row:focus-visible,
+.feature-dropdown summary:focus-visible {
   outline: 2px solid rgba(34,197,94,.65);
   outline-offset: 2px;
 }
