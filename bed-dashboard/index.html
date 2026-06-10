@@ -24,7 +24,7 @@
   .dash-shell .dash-nav button.active,.dash-shell .dash-nav a.active{font-weight:800!important}
   .dash-shell .data-last-updated{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 0;padding:12px 16px 12px 18px;border:1px solid rgba(56,189,248,.24);border-radius:20px;background:linear-gradient(145deg,rgba(9,31,50,.94),rgba(6,22,39,.88));box-shadow:0 20px 58px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.035);backdrop-filter:blur(10px)}
   .dash-shell .data-last-updated:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--cmc-blue,#0369a1),var(--cmc-teal,#0891b2),var(--cmc-green,#16a34a))}.dash-shell .data-last-updated span{color:#67e8f9;font-weight:950;text-transform:uppercase;letter-spacing:.09em;font-size:.74rem}.dash-shell .data-last-updated strong{color:#e0f2fe;font-weight:950}.dash-shell .data-last-updated small{color:var(--muted,#9ab4c9);font-weight:750}.dash-shell .data-last-updated strong:before{content:"●";color:var(--cmc-green,#16a34a);margin-right:8px;font-size:.78rem}
-  .theme-toggle{position:relative;z-index:5;display:inline-flex!important;align-items:center;gap:8px;padding:.58rem .72rem;border:1px solid rgba(56,189,248,.28);border-radius:999px;background:rgba(7,18,33,.86);color:var(--text);font-weight:850;cursor:pointer;pointer-events:auto}.theme-toggle-track{pointer-events:none;position:relative;width:42px;height:22px;border-radius:999px;background:rgba(15,23,42,.88);border:1px solid rgba(125,211,252,.28)}.theme-toggle-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#67e8f9,#22c55e);transition:.18s ease}.theme-toggle-label{pointer-events:none;font-size:.82rem}
+  .theme-toggle{position:relative;z-index:5;display:inline-flex!important;align-items:center;gap:8px;padding:.58rem .72rem;border:1px solid rgba(56,189,248,.28);border-radius:999px;background:rgba(7,18,33,.86);color:var(--text);font-weight:850;cursor:pointer;pointer-events:auto}.theme-toggle-track{pointer-events:none;position:relative;width:42px;height:22px;border-radius:999px;background:rgba(15,23,42,.88);border:1px solid rgba(125,211,252,.28)}.theme-toggle-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#67e8f9,#22c55e);transition:.18s ease}.theme-toggle-label{pointer-events:none;font-size:.82rem}.dashboard-help-btn{width:42px;height:42px;display:inline-grid!important;place-items:center;padding:.4rem!important;border-radius:999px!important;font-size:1.15rem;font-weight:950!important;line-height:1;cursor:pointer}
   html[data-theme="light"]{--bg:#f4fbff;--panel:#ffffff;--panel2:#eef8ff;--line:rgba(3,105,161,.18);--text:#0f2537;--muted:#557086;--accent:#0369a1;--accent2:#16a34a;--cmc-blue:#0369a1;--cmc-teal:#0891b2;--cmc-green:#16a34a;color-scheme:light}
   html[data-theme="light"] body{background:linear-gradient(135deg,#f8fdff 0%,#eef8ff 52%,#e8fff4 100%);color:var(--text)}
   html[data-theme="light"] .dash-hero{border-color:rgba(3,105,161,.20);background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(234,248,255,.94));box-shadow:0 28px 90px rgba(3,105,161,.16),0 18px 60px rgba(15,23,42,.08)}
@@ -87,6 +87,7 @@
     </div>
   </div>
   <nav class="dash-nav">
+    <button id="dashboardHelpButton" class="dashboard-help-btn" type="button" title="Dashboard-Hilfe öffnen" aria-label="Dashboard-Hilfe öffnen">?</button>
     <button id="listToggle" class="active" type="button">Dashboard</button>
     <button id="mapToggle" type="button">Kartenansicht</button>
     <a href="../dashboard-hospital-contacts.html">Verwaltung</a>
@@ -121,7 +122,8 @@
 <script src="../supabase-config.js"></script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../assets/dashboard-last-updated.js?v=last-updated-20260610c" defer></script>
+<script src="../assets/dashboard-help.js?v=dashboard-help-20260610a" defer></script>
+<script src="../assets/dashboard-last-updated.js?v=last-updated-20260610d" defer></script>
 <script src="../assets/dashboard-free-v3.js?v=dashboard-hospital-aggregate" defer></script>
 <script src="../assets/dashboard-hospital-detail.js?v=dashboard-hospital-aggregate" defer></script>
 <script src="../assets/dashboard-leaflet-map.js?v=leaflet-osm-map" defer></script>
