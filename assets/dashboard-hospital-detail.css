@@ -130,6 +130,80 @@
   font-weight: 950;
 }
 
+html[data-theme="light"] .aggregate-row:hover {
+  background: linear-gradient(145deg, #f0fdf4, #ffffff);
+  border-color: rgba(22, 163, 74, .36);
+  box-shadow: 0 14px 34px rgba(22, 163, 74, .12);
+}
+
+html[data-theme="light"] .hospital-detail-backdrop {
+  background: rgba(226, 246, 255, .74);
+  backdrop-filter: blur(12px);
+}
+
+html[data-theme="light"] .hospital-detail-card {
+  border-color: rgba(3, 105, 161, .18);
+  background: linear-gradient(145deg, #ffffff, #eef8ff);
+  color: #0f2537;
+  box-shadow: 0 34px 110px rgba(3, 105, 161, .22), 0 18px 48px rgba(15, 23, 42, .10);
+}
+
+html[data-theme="light"] .hospital-detail-head {
+  border-bottom-color: rgba(3, 105, 161, .16);
+  background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(236,249,255,.88));
+}
+
+html[data-theme="light"] .hospital-detail-head h2 {
+  background: linear-gradient(90deg, #0f2537 0%, #0369a1 56%, #16a34a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html[data-theme="light"] .hospital-detail-head p {
+  color: #557086;
+}
+
+html[data-theme="light"] .hospital-detail-close {
+  background: linear-gradient(145deg, #fff7ed, #ffffff);
+  color: #9a3412;
+  border-color: rgba(234, 88, 12, .28);
+  box-shadow: 0 10px 24px rgba(234, 88, 12, .12);
+}
+
+html[data-theme="light"] .detail-section {
+  border-color: rgba(3, 105, 161, .16);
+  background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(240,249,255,.88));
+  box-shadow: 0 16px 36px rgba(3, 105, 161, .08);
+}
+
+html[data-theme="light"] .detail-section h3 {
+  color: #0369a1;
+}
+
+html[data-theme="light"] .detail-item {
+  border-color: rgba(3, 105, 161, .15);
+  background: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.75);
+}
+
+html[data-theme="light"] .detail-item span {
+  color: #557086;
+}
+
+html[data-theme="light"] .detail-item strong,
+html[data-theme="light"] .detail-item p {
+  color: #0f2537;
+}
+
+html[data-theme="light"] .detail-count {
+  background: linear-gradient(135deg, #047857, #16a34a);
+  color: #ffffff;
+  border: 1px solid rgba(4, 120, 87, .35);
+  box-shadow: 0 10px 24px rgba(22, 163, 74, .22);
+  text-shadow: 0 1px 1px rgba(0,0,0,.18);
+}
+
 @media(max-width:760px) {
   .hospital-detail-backdrop {
     padding: 10px;
