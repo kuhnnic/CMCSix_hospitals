@@ -65,5 +65,15 @@
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script src="../assets/dashboard-free-v3.js?v=dashboard-hospital-aggregate" defer></script>
 <script src="../assets/dashboard-hospital-detail.js?v=dashboard-hospital-aggregate" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (new URLSearchParams(window.location.search).get('view') === 'map') {
+      window.setTimeout(function () {
+        var mapButton = document.getElementById('mapToggle');
+        if (mapButton) mapButton.click();
+      }, 150);
+    }
+  });
+</script>
 </body>
 </html>
