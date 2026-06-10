@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CMCSix Hospitals · Verfügbarkeit</title>
+<title>CMCSix Hospitals · Dashboard</title>
 <link rel="stylesheet" href="../assets/dashboard.css?v=dashboard-hospital-aggregate">
 <link rel="stylesheet" href="../assets/dashboard-isolated-fixes.css?v=dashboard-hospital-aggregate">
 <link rel="stylesheet" href="../assets/dashboard-no-station-column.css?v=dashboard-hospital-aggregate">
@@ -30,13 +30,13 @@
     <div class="dash-logo-wrap"><img src="../assets/cmc-logo.svg?v=dashboard-hospital-aggregate" alt="CMC Care Map Capacity" class="dash-logo"></div>
     <div class="dash-hero-copy">
       <p class="dash-kicker">CMCSix Control Center</p>
-      <h1 id="viewTitle">Verfügbarkeit</h1>
+      <h1 id="viewTitle">Dashboard</h1>
       <p id="viewSubtitle">Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.</p>
       <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
     </div>
   </div>
   <nav class="dash-nav">
-    <button id="listToggle" class="active" type="button">Verfügbarkeit</button>
+    <button id="listToggle" class="active" type="button">Dashboard</button>
     <button id="mapToggle" type="button">Kartenansicht</button>
     <a href="../dashboard-hospital-contacts.html">Verwaltung</a>
   </nav>
@@ -55,8 +55,8 @@
 <section class="dash-grid top-filter-layout">
   <section class="dashboard-main full-width">
     <section id="metrics" class="metric-strip"></section>
-    <section class="status-band"><div class="band-title"><span>Verfügbarkeit</span><small id="contextLabel">Nur freie Betten · Aggregation pro Spital</small></div><div id="statusBars" class="status-bars"></div></section>
-    <section id="mapCard" class="table-card hospital-map-card" hidden><div class="table-toolbar"><div><span class="dash-kicker">Kartenansicht</span><h2>Spitäler auf der Karte</h2></div><small>Spital anklicken, um in der Hauptansicht danach zu filtern</small></div><div id="hospitalMap" aria-live="polite"></div></section>
+    <section class="status-band"><div class="band-title"><span>Dashboard</span><small id="contextLabel">Nur freie Betten · Aggregation pro Spital</small></div><div id="statusBars" class="status-bars"></div></section>
+    <section id="mapCard" class="table-card hospital-map-card" hidden><div class="table-toolbar"><div><span class="dash-kicker">Kartenansicht</span><h2>Spitäler auf der Karte</h2></div><small>Spital anklicken, um im Dashboard danach zu filtern</small></div><div id="hospitalMap" aria-live="polite"></div></section>
     <section class="table-card"><div class="table-toolbar"><div><span class="dash-kicker">Aggregierte Live-Liste</span><h2>Spitäler mit freien Betten</h2></div><small id="listInfo">0 Spitäler · 0 freie Betten</small></div><div id="beds" class="dash-table" aria-live="polite"></div></section>
   </section>
 </section>
@@ -75,8 +75,8 @@
 
     function setActiveView(view) {
       var isMap = view === 'map';
-      if (viewTitle) viewTitle.textContent = isMap ? 'Kartenansicht' : 'Verfügbarkeit';
-      document.title = 'CMCSix Hospitals · ' + (isMap ? 'Kartenansicht' : 'Verfügbarkeit');
+      if (viewTitle) viewTitle.textContent = isMap ? 'Kartenansicht' : 'Dashboard';
+      document.title = 'CMCSix Hospitals · ' + (isMap ? 'Kartenansicht' : 'Dashboard');
       if (viewSubtitle) viewSubtitle.textContent = isMap
         ? 'Geografische Übersicht der Spitäler mit freien Betten und direkter Filterauswahl.'
         : 'Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.';
