@@ -6,8 +6,49 @@
 <title>CMCSix Hospitals · Verwaltung</title>
 <link rel="stylesheet" href="assets/dashboard.css?v=20260609-contacts-cmc-theme">
 <link rel="stylesheet" href="assets/dashboard-isolated-fixes.css?v=20260609-contacts-cmc-theme">
-<link rel="stylesheet" href="assets/dashboard-contacts.css?v=20260609-contacts-cmc-theme">
+<link rel="stylesheet" href="assets/dashboard-contacts.css?v=20260610-management-theme">
 <link rel="stylesheet" href="assets/dashboard-cmc-theme.css?v=20260609-contacts-cmc-theme">
+<style>
+  .theme-toggle{position:relative;z-index:5;display:inline-flex!important;align-items:center;gap:8px;padding:.58rem .72rem;border:1px solid rgba(56,189,248,.28);border-radius:999px;background:rgba(7,18,33,.86);color:var(--text);font-weight:850;cursor:pointer;pointer-events:auto}.theme-toggle-track{pointer-events:none;position:relative;width:42px;height:22px;border-radius:999px;background:rgba(15,23,42,.88);border:1px solid rgba(125,211,252,.28)}.theme-toggle-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#67e8f9,#22c55e);transition:.18s ease}.theme-toggle-label{pointer-events:none;font-size:.82rem}
+  html[data-theme="light"]{--bg:#f4fbff;--panel:#ffffff;--panel2:#eef8ff;--line:rgba(3,105,161,.18);--text:#0f2537;--muted:#557086;--accent:#0369a1;--accent2:#16a34a;--cmc-blue:#0369a1;--cmc-teal:#0891b2;--cmc-green:#16a34a;color-scheme:light}
+  html[data-theme="light"] body{background:linear-gradient(135deg,#f8fdff 0%,#eef8ff 52%,#e8fff4 100%);color:var(--text)}
+  html[data-theme="light"] .dash-hero{border-color:rgba(3,105,161,.20);background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(234,248,255,.94));box-shadow:0 28px 90px rgba(3,105,161,.16),0 18px 60px rgba(15,23,42,.08)}
+  html[data-theme="light"] .dash-hero h1{background:linear-gradient(90deg,#0f2537 0%,#0369a1 44%,#16a34a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  html[data-theme="light"] .dash-kicker{color:#0369a1}
+  html[data-theme="light"] .dash-nav a,html[data-theme="light"] .dash-nav button,html[data-theme="light"] .theme-toggle{background:rgba(255,255,255,.88);border-color:rgba(3,105,161,.20);color:#0f2537;box-shadow:0 10px 26px rgba(3,105,161,.10)}
+  html[data-theme="light"] .dash-nav a.active,html[data-theme="light"] .dash-nav button.active{background:linear-gradient(135deg,#0369a1,#0891b2);color:#fff}
+  html[data-theme="light"] .theme-toggle-thumb{left:23px!important;background:linear-gradient(135deg,#0369a1,#16a34a)}
+  html[data-theme="light"] .sync{background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(236,249,255,.90))!important;border:1px solid rgba(3,105,161,.18)!important;color:#0f2537!important;box-shadow:0 10px 26px rgba(3,105,161,.10)!important}
+  html[data-theme="light"] .sync span{color:#0f2537!important;font-weight:850!important}
+  html[data-theme="light"] .sync i{background:#0891b2!important;box-shadow:0 0 0 5px rgba(8,145,178,.12)!important}
+  html[data-theme="light"] .sync.ok{background:linear-gradient(145deg,#f0fdf4,#ffffff)!important;border-color:rgba(22,163,74,.28)!important;color:#166534!important}
+  html[data-theme="light"] .sync.ok span{color:#166534!important}
+  html[data-theme="light"] .sync.ok i{background:#16a34a!important;box-shadow:0 0 0 5px rgba(22,163,74,.14)!important}
+  html[data-theme="light"] .sync.err{background:linear-gradient(145deg,#fff7ed,#ffffff)!important;border-color:rgba(220,38,38,.24)!important;color:#991b1b!important}
+  html[data-theme="light"] .sync.err span{color:#991b1b!important}
+  html[data-theme="light"] .sync.err i{background:#dc2626!important;box-shadow:0 0 0 5px rgba(220,38,38,.12)!important}
+</style>
+<script>
+(function(){
+  function applyTheme(theme){
+    document.documentElement.setAttribute('data-theme',theme);
+    try{localStorage.setItem('cmcsix-theme',theme)}catch(e){}
+    var btn=document.getElementById('themeToggle');
+    if(btn){
+      var light=theme==='light';
+      btn.setAttribute('aria-pressed',String(light));
+      var label=btn.querySelector('.theme-toggle-label');
+      if(label)label.textContent=light?'Dark Mode':'Light Mode';
+    }
+  }
+  window.toggleCmcsixTheme=function(){
+    var current=document.documentElement.getAttribute('data-theme')||'dark';
+    applyTheme(current==='light'?'dark':'light');
+  };
+  window.refreshCmcsixThemeButton=function(){applyTheme(document.documentElement.getAttribute('data-theme')||'dark')};
+  try{document.documentElement.setAttribute('data-theme',localStorage.getItem('cmcsix-theme')||'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}
+})();
+</script>
 </head>
 <body>
 <main class="dash-shell">
@@ -25,6 +66,7 @@
     <a href="bed-dashboard/">Dashboard</a>
     <a href="bed-dashboard/?view=map">Kartenansicht</a>
     <a class="active" href="dashboard-hospital-contacts.html">Verwaltung</a>
+    <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" onclick="window.toggleCmcsixTheme && window.toggleCmcsixTheme()"><span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span><span class="theme-toggle-label">Light Mode</span></button>
   </nav>
 </header>
 
@@ -54,5 +96,10 @@
 <script src="supabase-config.js"></script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script src="assets/dashboard-contacts.js?v=20260609-contacts-cmc-theme" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if(window.refreshCmcsixThemeButton)window.refreshCmcsixThemeButton();
+  });
+</script>
 </body>
 </html>
