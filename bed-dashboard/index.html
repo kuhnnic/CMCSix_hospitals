@@ -14,7 +14,7 @@
 <style>
   .dash-shell .top-filter-panel{position:relative;top:auto;display:grid;gap:16px;margin:18px 0 18px;padding:18px;border-radius:26px;background:var(--panel,#fff);border:1px solid var(--line,rgba(15,118,110,.18));box-shadow:0 20px 60px rgba(13,63,58,.12)}
   .dash-shell .top-filter-panel .panel-title{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0}
-  .dash-shell .top-filter-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:end}
+  .dash-shell .top-filter-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:end}
   .dash-shell .top-filter-grid label{min-width:0;margin:0}
   .dash-shell .dashboard-main.full-width{width:100%;min-width:0}
   .dash-shell .dash-grid.top-filter-layout{display:block}
@@ -47,6 +47,7 @@
     <label>Spital<select id="hospital"><option value="all">Alle Spitäler</option></select></label>
     <label>Fachgebiet<select id="specialty"><option value="all">Alle Fachgebiete</option></select></label>
     <label>Geschlecht<select id="gender"><option value="all">Alle Geschlechter</option></select></label>
+    <label>Bettentyp<select id="bedType"><option value="all">Alle Bettentypen</option></select></label>
     <label>Suche<input id="search" placeholder="Spital, Fachgebiet, Gültigkeitsgebiet"></label>
   </div>
 </section>
