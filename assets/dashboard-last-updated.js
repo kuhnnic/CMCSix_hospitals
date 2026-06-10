@@ -6,6 +6,23 @@
     style.textContent='html[data-theme="light"] .sync{background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(236,249,255,.88))!important;border-color:rgba(3,105,161,.18)!important;color:#0f2537!important;box-shadow:0 10px 26px rgba(3,105,161,.10)!important}html[data-theme="light"] .sync span{color:#0f2537!important;font-weight:850}html[data-theme="light"] .sync i{background:#0891b2!important;box-shadow:0 0 0 5px rgba(8,145,178,.12)!important}html[data-theme="light"] .sync.ok{background:linear-gradient(145deg,#f0fdf4,#ffffff)!important;border-color:rgba(22,163,74,.28)!important;color:#166534!important}html[data-theme="light"] .sync.ok span{color:#166534!important}html[data-theme="light"] .sync.ok i{background:#16a34a!important;box-shadow:0 0 0 5px rgba(22,163,74,.14)!important}html[data-theme="light"] .sync.err{background:linear-gradient(145deg,#fff7ed,#ffffff)!important;border-color:rgba(220,38,38,.24)!important;color:#991b1b!important}html[data-theme="light"] .sync.err span{color:#991b1b!important}html[data-theme="light"] .sync.err i{background:#dc2626!important;box-shadow:0 0 0 5px rgba(220,38,38,.12)!important}';
     document.head.appendChild(style);
   }
+  function keepMapAfterReset(){
+    var reset=document.getElementById('resetFilters');
+    if(!reset||reset.dataset.keepMapBound==='1')return;
+    reset.dataset.keepMapBound='1';
+    reset.addEventListener('click',function(){
+      var wasMap=document.body.classList.contains('map-mode')||(document.getElementById('mapToggle')||{}).classList&&document.getElementById('mapToggle').classList.contains('active');
+      if(!wasMap)return;
+      window.setTimeout(function(){
+        var mapButton=document.getElementById('mapToggle');
+        if(mapButton&&!mapButton.classList.contains('active'))mapButton.click();
+      },80);
+      window.setTimeout(function(){
+        var mapButton=document.getElementById('mapToggle');
+        if(mapButton&&!document.body.classList.contains('map-mode'))mapButton.click();
+      },220);
+    },true);
+  }
   function formatDate(date){
     try{return new Intl.DateTimeFormat('de-CH',{dateStyle:'medium',timeStyle:'short'}).format(date)}
     catch(e){return date.toLocaleString('de-CH')}
@@ -28,6 +45,7 @@
   }
   function ensureIndicator(){
     injectStatusStyles();
+    keepMapAfterReset();
     var existing=document.getElementById('dataLastUpdated');
     if(existing)return existing;
     var header=document.querySelector('.dash-hero');
