@@ -22,6 +22,8 @@
   .dash-shell .dash-grid.top-filter-layout{display:block}
   .dash-shell .dash-nav button:not(.active),.dash-shell .dash-nav a:not(.active){font-weight:600!important}
   .dash-shell .dash-nav button.active,.dash-shell .dash-nav a.active{font-weight:800!important}
+  .dash-shell .data-last-updated{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 0;padding:12px 16px;border:1px solid rgba(15,118,110,.18);border-radius:20px;background:rgba(255,255,255,.86);box-shadow:0 14px 34px rgba(13,63,58,.10);backdrop-filter:blur(10px)}
+  .dash-shell .data-last-updated span{color:var(--muted,#64748b);font-weight:900;text-transform:uppercase;letter-spacing:.08em;font-size:.74rem}.dash-shell .data-last-updated strong{color:var(--text,#0f172a);font-weight:950}.dash-shell .data-last-updated small{color:var(--muted,#64748b);font-weight:700}
   @media(max-width:1180px){.dash-shell .top-filter-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
   @media(max-width:760px){.dash-shell .top-filter-panel{padding:14px;border-radius:22px}.dash-shell .top-filter-grid{grid-template-columns:1fr}}
 </style>
@@ -44,6 +46,11 @@
     <a href="../dashboard-hospital-contacts.html">Verwaltung</a>
   </nav>
 </header>
+<section id="dataLastUpdated" class="data-last-updated" aria-live="polite">
+  <span>Datenstand</span>
+  <strong>Wird geladen …</strong>
+  <small>Datum und Uhrzeit der letzten Aktualisierung</small>
+</section>
 <section class="control-panel top-filter-panel" aria-label="Filter">
   <div class="panel-title"><span>Filter</span><button id="resetFilters" type="button">Zurücksetzen</button></div>
   <div class="top-filter-grid">
@@ -67,7 +74,7 @@
 <script src="../supabase-config.js"></script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../assets/dashboard-last-updated.js?v=last-updated-20260610" defer></script>
+<script src="../assets/dashboard-last-updated.js?v=last-updated-20260610b" defer></script>
 <script src="../assets/dashboard-free-v3.js?v=dashboard-hospital-aggregate" defer></script>
 <script src="../assets/dashboard-hospital-detail.js?v=dashboard-hospital-aggregate" defer></script>
 <script src="../assets/dashboard-leaflet-map.js?v=leaflet-osm-map" defer></script>
@@ -78,30 +85,18 @@
     var listButton = document.getElementById('listToggle');
     var mapButton = document.getElementById('mapToggle');
     var managementLink = document.querySelector('.dash-nav a[href="../dashboard-hospital-contacts.html"]');
-
     function setActiveView(view) {
       var isMap = view === 'map';
       if (viewTitle) viewTitle.textContent = isMap ? 'Kartenansicht' : 'Dashboard';
       document.title = 'CMCSix Hospitals · ' + (isMap ? 'Kartenansicht' : 'Dashboard');
-      if (viewSubtitle) viewSubtitle.textContent = isMap
-        ? 'Zoombare OpenStreetMap-Karte mit Straßen, Ortschaften und Spital-Markern.'
-        : 'Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.';
+      if (viewSubtitle) viewSubtitle.textContent = isMap ? 'Zoombare OpenStreetMap-Karte mit Straßen, Ortschaften und Spital-Markern.' : 'Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.';
       if (listButton) listButton.classList.toggle('active', !isMap);
       if (mapButton) mapButton.classList.toggle('active', isMap);
       if (managementLink) managementLink.classList.remove('active');
     }
-
     if (listButton) listButton.addEventListener('click', function () { setActiveView('list'); });
     if (mapButton) mapButton.addEventListener('click', function () { setActiveView('map'); });
-
-    if (new URLSearchParams(window.location.search).get('view') === 'map') {
-      window.setTimeout(function () {
-        if (mapButton) mapButton.click();
-        setActiveView('map');
-      }, 150);
-    } else {
-      setActiveView('list');
-    }
+    if (new URLSearchParams(window.location.search).get('view') === 'map') { window.setTimeout(function () { if (mapButton) mapButton.click(); setActiveView('map'); }, 150); } else { setActiveView('list'); }
   });
 </script>
 </body>
