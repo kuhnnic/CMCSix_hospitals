@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CMCSix Hospitals · Dashboard freie Betten pro Spital</title>
+<title>CMCSix Hospitals · Verfügbarkeit</title>
 <link rel="stylesheet" href="../assets/dashboard.css?v=dashboard-hospital-aggregate">
 <link rel="stylesheet" href="../assets/dashboard-isolated-fixes.css?v=dashboard-hospital-aggregate">
 <link rel="stylesheet" href="../assets/dashboard-no-station-column.css?v=dashboard-hospital-aggregate">
@@ -30,15 +30,15 @@
     <div class="dash-logo-wrap"><img src="../assets/cmc-logo.svg?v=dashboard-hospital-aggregate" alt="CMC Care Map Capacity" class="dash-logo"></div>
     <div class="dash-hero-copy">
       <p class="dash-kicker">CMCSix Control Center</p>
-      <h1>Freie Betten pro Spital</h1>
-      <p>Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.</p>
+      <h1 id="viewTitle">Verfügbarkeit</h1>
+      <p id="viewSubtitle">Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.</p>
       <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
     </div>
   </div>
   <nav class="dash-nav">
     <button id="listToggle" class="active" type="button">Verfügbarkeit</button>
     <button id="mapToggle" type="button">Kartenansicht</button>
-    <a class="active" href="../dashboard-hospital-contacts.html">Verwaltung</a>
+    <a href="../dashboard-hospital-contacts.html">Verwaltung</a>
   </nav>
 </header>
 <section class="control-panel top-filter-panel" aria-label="Filter">
@@ -67,11 +67,34 @@
 <script src="../assets/dashboard-hospital-detail.js?v=dashboard-hospital-aggregate" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    var viewTitle = document.getElementById('viewTitle');
+    var viewSubtitle = document.getElementById('viewSubtitle');
+    var listButton = document.getElementById('listToggle');
+    var mapButton = document.getElementById('mapToggle');
+    var managementLink = document.querySelector('.dash-nav a[href="../dashboard-hospital-contacts.html"]');
+
+    function setActiveView(view) {
+      var isMap = view === 'map';
+      if (viewTitle) viewTitle.textContent = isMap ? 'Kartenansicht' : 'Verfügbarkeit';
+      document.title = 'CMCSix Hospitals · ' + (isMap ? 'Kartenansicht' : 'Verfügbarkeit');
+      if (viewSubtitle) viewSubtitle.textContent = isMap
+        ? 'Geografische Übersicht der Spitäler mit freien Betten und direkter Filterauswahl.'
+        : 'Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.';
+      if (listButton) listButton.classList.toggle('active', !isMap);
+      if (mapButton) mapButton.classList.toggle('active', isMap);
+      if (managementLink) managementLink.classList.remove('active');
+    }
+
+    if (listButton) listButton.addEventListener('click', function () { setActiveView('list'); });
+    if (mapButton) mapButton.addEventListener('click', function () { setActiveView('map'); });
+
     if (new URLSearchParams(window.location.search).get('view') === 'map') {
       window.setTimeout(function () {
-        var mapButton = document.getElementById('mapToggle');
         if (mapButton) mapButton.click();
+        setActiveView('map');
       }, 150);
+    } else {
+      setActiveView('list');
     }
   });
 </script>
