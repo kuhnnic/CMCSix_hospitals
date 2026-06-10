@@ -1,0 +1,1 @@
+.contact-layout .dashboard-main{min-width:0;overflow-x:auto}.contact-layout .metric-strip{min-width:1180px;grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch}.contact-layout .metric{min-width:0}@media(max-width:760px){.contact-layout .metric-strip{min-width:0;grid-template-columns:1fr}}
