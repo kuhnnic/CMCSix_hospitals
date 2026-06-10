@@ -4,13 +4,13 @@ Separate Demo-App für die zentrale, aggregierte Anzeige der Spitalbettenverfüg
 
 ## Zweck
 
-Die App liest die Bettenverfügbarkeit aus derselben Supabase-Datenquelle wie die App `Spitalbettenverwaltung` (`beds`), zeigt aber keine Einzelbetten an. Die Übersicht aggregiert pro Spital und zeigt nur Spitäler mit freien oder verfügbaren Betten.
+Die App liest die Bettenverfügbarkeit aus derselben Supabase-Datenquelle wie die App `Spitalbettenverwaltung` (`beds`), zeigt aber keine Einzelbetten an. Die Übersicht aggregiert pro Spital und zeigt nur Spitäler mit freien Betten (`status = free`).
 
 ## MVP-Funktionen
 
 - Mobile- und Desktop-optimierte Dashboard-Oberfläche
 - Standardfilter: Region, Spital, Fachrichtung, Telemetriebedarf, Geschlecht und Suche
-- Aggregierte Anzeige der Verfügbarkeit pro Spital
+- Aggregierte Anzeige freier Betten pro Spital
 - Anzeige von Fachgebieten mit freien Betten und Gültigkeitsregion
 - Auto-Refresh alle 5 Minuten plus Supabase-Realtime-Subscription, sofern aktiv
 - Stammdatenverwaltung mit schreibgeschützten SASIS-Feldern
