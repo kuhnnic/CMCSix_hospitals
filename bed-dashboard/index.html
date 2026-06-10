@@ -1,123 +1,56 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CMCSix · Bettenverfügbarkeit Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CMCSix Hospitals · Dashboard freie Betten pro Spital</title>
+<link rel="stylesheet" href="../assets/dashboard.css?v=dashboard-hospital-aggregate">
+<link rel="stylesheet" href="../assets/dashboard-isolated-fixes.css?v=dashboard-hospital-aggregate">
+<link rel="stylesheet" href="../assets/dashboard-no-station-column.css?v=dashboard-hospital-aggregate">
+<link rel="stylesheet" href="../assets/dashboard-hide-station-metric.css?v=dashboard-hospital-aggregate">
+<link rel="stylesheet" href="../assets/dashboard-hospital-detail.css?v=dashboard-hospital-aggregate">
+<link rel="stylesheet" href="../assets/dashboard-cmc-theme.css?v=dashboard-hospital-aggregate">
+<link rel="stylesheet" href="../assets/dashboard-map.css?v=dashboard-hospital-aggregate">
 </head>
 <body>
-  <main class="shell">
-    <section class="hero panel">
-      <div>
-        <p class="kicker">CMCSix Dashboard</p>
-        <h1>Spitalbettenverfügbarkeit</h1>
-        <p class="lead">Zentrale, aggregierte Sicht auf freie Betten in umliegenden Spitälern – gefiltert nach Region, Fachgebiet und Bedarf.</p>
-        <div class="status-line">
-          <span id="syncBadge" class="sync-badge"><i></i><span>Verbindung wird geprüft …</span></span>
-          <span id="lastUpdated" class="muted">Noch nicht aktualisiert</span>
-        </div>
-      </div>
-      <div class="hero-card" aria-label="SASIS Stammdaten">
-        <span>SASIS-Stammdaten</span>
-        <strong id="hospitalCount">16</strong>
-        <small>Spitalstandorte · nicht überschrieben</small>
-      </div>
-    </section>
-
-    <section class="tabs" aria-label="Ansichten">
-      <button class="tab active" type="button" data-view="overview">Verfügbarkeit</button>
-      <button class="tab" type="button" data-view="admin">Stammdatenverwaltung</button>
-    </section>
-
-    <section id="overviewView" class="view active">
-      <section class="panel filters-panel">
-        <div class="title-row">
-          <div>
-            <p class="kicker">Standardfilter</p>
-            <h2>Passende Betten finden</h2>
-          </div>
-          <button id="resetFilters" type="button">Filter zurücksetzen</button>
-        </div>
-        <div class="filters-grid">
-          <label class="field">Region
-            <select id="regionFilter"></select>
-          </label>
-          <label class="field">Spital
-            <select id="hospitalFilter"></select>
-          </label>
-          <label class="field">Fachrichtung
-            <select id="specialtyFilter"></select>
-          </label>
-          <label class="field">Telemetriebedarf
-            <select id="telemetryFilter">
-              <option value="all">Alle</option>
-              <option value="yes">Nur mit Monitoring/Telemetrie</option>
-              <option value="no">Ohne Telemetriebedarf</option>
-            </select>
-          </label>
-          <label class="field">Geschlecht
-            <select id="genderFilter">
-              <option value="all">Alle</option>
-              <option value="female">Weiblich</option>
-              <option value="male">Männlich</option>
-              <option value="neutral">Neutral / nicht relevant</option>
-            </select>
-          </label>
-          <label class="field">Suche
-            <input id="searchFilter" type="search" placeholder="Spital, Ort, Fachgebiet …">
-          </label>
-        </div>
-      </section>
-
-      <section id="kpis" class="kpis" aria-live="polite"></section>
-
-      <section class="panel results-panel">
-        <div class="title-row">
-          <div>
-            <p class="kicker">Aggregierte Übersicht</p>
-            <h2>Spitäler mit freien Betten</h2>
-          </div>
-          <span id="resultContext" class="pill"></span>
-        </div>
-        <div id="hospitalResults" class="hospital-results" aria-live="polite"></div>
-      </section>
-    </section>
-
-    <section id="adminView" class="view">
-      <section class="panel admin-panel">
-        <div class="title-row">
-          <div>
-            <p class="kicker">Stammdatenverwaltung</p>
-            <h2>SASIS-Daten ergänzen</h2>
-            <p class="muted compact">SASIS-Felder sind bewusst schreibgeschützt. Gespeichert werden nur Kontaktinformation und Bemerkungen.</p>
-          </div>
-          <span id="profileSync" class="pill">Profile: lokaler Fallback</span>
-        </div>
-        <div class="admin-layout">
-          <aside class="hospital-list" id="adminHospitalList"></aside>
-          <form id="profileForm" class="profile-form">
-            <div id="readonlySasis" class="readonly-sasis"></div>
-            <label class="field">Kontaktinformation
-              <textarea id="contactInfo" rows="5" placeholder="Telefon, E-Mail, Kontaktstelle, Erreichbarkeit …"></textarea>
-            </label>
-            <label class="field">Bemerkungen
-              <textarea id="remarks" rows="5" placeholder="Interne Hinweise, Prozessnotizen, bevorzugte Übergabe …"></textarea>
-            </label>
-            <div class="form-actions">
-              <button class="primary" type="submit">Ergänzungen speichern</button>
-              <button id="clearProfile" class="ghost" type="button">Ergänzungen leeren</button>
-            </div>
-          </form>
-        </div>
-      </section>
-    </section>
-  </main>
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="supabase-config.js"></script>
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="assets/dashboard.js" defer></script>
-  <script src="assets/free-only.js" defer></script>
+<main class="dash-shell">
+<header class="dash-hero">
+  <div class="dash-hero-brand">
+    <div class="dash-logo-wrap"><img src="../assets/cmc-logo.svg?v=dashboard-hospital-aggregate" alt="CMC Care Map Capacity" class="dash-logo"></div>
+    <div class="dash-hero-copy">
+      <p class="dash-kicker">CMCSix Control Center</p>
+      <h1>Freie Betten pro Spital</h1>
+      <p>Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.</p>
+      <span id="sync" class="sync"><i></i><span>Supabase wird geprüft ...</span></span>
+    </div>
+  </div>
+  <nav class="dash-nav">
+    <button id="listToggle" class="active" type="button">Hauptansicht</button>
+    <button id="mapToggle" type="button">Kartenansicht</button>
+    <a class="active" href="../dashboard-hospital-contacts.html">Spitalkontakte bearbeiten</a>
+  </nav>
+</header>
+<section class="dash-grid">
+  <aside class="control-panel">
+    <div class="panel-title"><span>Filter</span><button id="resetFilters" type="button">Zurücksetzen</button></div>
+    <label>Gültigkeitsgebiet<select id="validity"><option value="all">Alle Gültigkeitsgebiete</option></select></label>
+    <label>Spital<select id="hospital"><option value="all">Alle Spitäler</option></select></label>
+    <label>Fachgebiet<select id="specialty"><option value="all">Alle Fachgebiete</option></select></label>
+    <label>Geschlecht<select id="gender"><option value="all">Alle Geschlechter</option></select></label>
+    <div class="feature-field"><span>Eigenschaft</span><div id="featureMulti" class="feature-checks"></div></div>
+    <label>Suche<input id="search" placeholder="Spital, Fachgebiet, Gültigkeitsgebiet"></label>
+  </aside>
+  <section class="dashboard-main">
+    <section id="metrics" class="metric-strip"></section>
+    <section class="status-band"><div class="band-title"><span>Verfügbarkeit</span><small id="contextLabel">Nur freie Betten · Aggregation pro Spital</small></div><div id="statusBars" class="status-bars"></div></section>
+    <section id="mapCard" class="table-card hospital-map-card" hidden><div class="table-toolbar"><div><span class="dash-kicker">Kartenansicht</span><h2>Spitäler auf der Karte</h2></div><small>Spital anklicken, um in der Hauptansicht danach zu filtern</small></div><div id="hospitalMap" aria-live="polite"></div></section>
+    <section class="table-card"><div class="table-toolbar"><div><span class="dash-kicker">Aggregierte Live-Liste</span><h2>Spitäler mit freien Betten</h2></div><small id="listInfo">0 Spitäler · 0 freie Betten</small></div><div id="beds" class="dash-table" aria-live="polite"></div></section>
+  </section>
+</section>
+</main>
+<script src="../supabase-config.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="../assets/dashboard-free-v3.js?v=dashboard-hospital-aggregate" defer></script>
+<script src="../assets/dashboard-hospital-detail.js?v=dashboard-hospital-aggregate" defer></script>
 </body>
 </html>
