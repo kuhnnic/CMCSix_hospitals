@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../assets/dashboard-hospital-detail.css?v=dashboard-hospital-aggregate">
 <link rel="stylesheet" href="../assets/dashboard-cmc-theme.css?v=dashboard-hospital-aggregate">
 <link rel="stylesheet" href="../assets/dashboard-map.css?v=dashboard-hospital-aggregate">
+<link rel="stylesheet" href="../assets/dashboard-detailed-map.css?v=dashboard-detailed-map">
 <style>
   .dash-shell .top-filter-panel{position:relative;top:auto;display:grid;gap:16px;margin:18px 0 18px;padding:18px;border-radius:26px;background:var(--panel,#fff);border:1px solid var(--line,rgba(15,118,110,.18));box-shadow:0 20px 60px rgba(13,63,58,.12)}
   .dash-shell .top-filter-panel .panel-title{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0}
@@ -57,7 +58,7 @@
   <section class="dashboard-main full-width">
     <section id="metrics" class="metric-strip"></section>
     <section class="status-band"><div class="band-title"><span>Dashboard</span><small id="contextLabel">Nur freie Betten · Aggregation pro Spital</small></div><div id="statusBars" class="status-bars"></div></section>
-    <section id="mapCard" class="table-card hospital-map-card" hidden><div class="table-toolbar"><div><span class="dash-kicker">Kartenansicht</span><h2>Spitäler auf der Karte</h2></div><small>Spital anklicken, um im Dashboard danach zu filtern</small></div><div id="hospitalMap" aria-live="polite"></div></section>
+    <section id="mapCard" class="table-card hospital-map-card" hidden><div class="table-toolbar"><div><span class="dash-kicker">Kartenansicht</span><h2>Spitäler auf der Karte</h2></div><small>Detailkarte mit Regionen, Kapazitätsgrößen, Legende und Tooltip. Spital anklicken, um im Dashboard danach zu filtern.</small></div><div id="hospitalMap" aria-live="polite"></div></section>
     <section class="table-card"><div class="table-toolbar"><div><span class="dash-kicker">Aggregierte Live-Liste</span><h2>Spitäler mit freien Betten</h2></div><small id="listInfo">0 Spitäler · 0 freie Betten</small></div><div id="beds" class="dash-table" aria-live="polite"></div></section>
   </section>
 </section>
@@ -66,6 +67,7 @@
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script src="../assets/dashboard-free-v3.js?v=dashboard-hospital-aggregate" defer></script>
 <script src="../assets/dashboard-hospital-detail.js?v=dashboard-hospital-aggregate" defer></script>
+<script src="../assets/dashboard-detailed-map.js?v=dashboard-detailed-map" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var viewTitle = document.getElementById('viewTitle');
@@ -79,7 +81,7 @@
       if (viewTitle) viewTitle.textContent = isMap ? 'Kartenansicht' : 'Dashboard';
       document.title = 'CMCSix Hospitals · ' + (isMap ? 'Kartenansicht' : 'Dashboard');
       if (viewSubtitle) viewSubtitle.textContent = isMap
-        ? 'Geografische Übersicht der Spitäler mit freien Betten und direkter Filterauswahl.'
+        ? 'Detailkarte mit Regionen, Kapazitätsgrößen, Legende und direkter Spitalauswahl.'
         : 'Live-Aggregation aus Supabase: Es werden ausschliesslich freie Betten geladen und pro Spital zusammengefasst.';
       if (listButton) listButton.classList.toggle('active', !isMap);
       if (mapButton) mapButton.classList.toggle('active', isMap);
