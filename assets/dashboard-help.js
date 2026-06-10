@@ -1,0 +1,28 @@
+(function(){
+  function helpHtml(){
+    var cards=[
+      ['Dashboard Übersicht','Zeigt nur Spitäler mit freien Betten. Die Daten werden aus Supabase geladen, pro Spital aggregiert und mit Fachgebiet, Geschlecht, Gültigkeitsgebiet und Bettentyp/Eigenschaften angezeigt.','dashboard freie betten übersicht aggregation fachgebiet gültigkeitsgebiet spital'],
+      ['Filter','Oben stehen Filter für Gültigkeitsgebiet, Spital, Fachgebiet, Geschlecht, Bettentyp und Suche. Die Filter wirken auf Liste, Metriken und Kartenansicht. Zurücksetzen leert alle Filter.','filter gültigkeitsgebiet spital fachgebiet geschlecht bettentyp suche zurücksetzen'],
+      ['Bettentyp','Der Bettentyp ist ein einfacher Dropdown-Filter. Er basiert auf Eigenschaften wie Sauerstoff, Monitoring, Isolation und Barrierefrei. In der Liste bleiben die Eigenschaften sichtbar.','bettentyp eigenschaften sauerstoff monitoring isolation barrierefrei dropdown'],
+      ['Kartenansicht','Die Kartenansicht nutzt Leaflet und OpenStreetMap. Marker zeigen freie Betten pro Spital. Die rechte Spitalliste enthält nur Spitäler, die zu den aktuellen Filterkriterien passen.','kartenansicht leaflet openstreetmap marker rechte liste zoom spital filter'],
+      ['Karte bedienen','Zoomen, verschieben und Marker anklicken. Klick auf ein Spital rechts zeigt nur dieses Spital in der Karte. Im Marker-Popup kann das gesamte Dashboard auf dieses Spital gefiltert werden.','karte zoom pan popup marker alle gefilterten spitäler anzeigen'],
+      ['Datenstand & Supabase Status','Der Datenstand zeigt Datum und Uhrzeit der letzten Aktualisierung. Der Supabase-Status zeigt Verbindung, Ladezustand oder Fehler.','datenstand datum uhrzeit supabase status verbindung aktualisierung'],
+      ['Light / Dark Mode','Der Toggle im Header wechselt zwischen hellem Design und bestehendem dunklem Design. Die Auswahl wird lokal im Browser gespeichert.','light mode dark mode toggle design browser speichern'],
+      ['Verwaltung','Die Verwaltungsansicht pflegt Stammdaten-Ergänzungen. SASIS-Daten werden nicht überschrieben; ergänzt werden Kontaktinformation und Bemerkungen.','verwaltung stammdaten sasis kontaktinformation bemerkungen'],
+      ['Typische Use Cases','Freie Betten nach Region finden, Fachgebiet filtern, Spitalstandort auf Karte prüfen, verfügbare Bettentypen suchen, Kontaktinformationen ergänzen.','use cases region fachgebiet standort kontakt freie betten']
+    ];
+    return '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMCSix Dashboard Hilfe</title><style>body{margin:0;font-family:Inter,Arial,sans-serif;background:#07182a;color:#e8f7ff}header{position:sticky;top:0;background:linear-gradient(145deg,#082f49,#061627);padding:22px;border-bottom:1px solid rgba(103,232,249,.22);z-index:2}h1{margin:0 0 6px;font-size:1.55rem}p{color:#9ab4c9;line-height:1.55}.wrap{max-width:1040px;margin:auto;padding:18px}input{width:100%;box-sizing:border-box;margin-top:14px;padding:14px 16px;border-radius:16px;border:1px solid rgba(103,232,249,.24);background:#0f2537;color:#e8f7ff;font-size:1rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:18px}.card{padding:16px;border:1px solid rgba(103,232,249,.18);border-radius:18px;background:rgba(15,37,55,.78);box-shadow:0 16px 36px rgba(0,0,0,.22)}h2{margin:.1rem 0 .5rem;color:#67e8f9;font-size:1.02rem}.tag{display:inline-flex;margin:.2rem .2rem .2rem 0;padding:.25rem .5rem;border-radius:999px;background:rgba(34,197,94,.12);color:#bbf7d0;font-size:.78rem;font-weight:800}.empty{display:none;margin-top:18px;padding:16px;border-radius:16px;background:#1f2937;color:#fca5a5}@media(prefers-color-scheme:light){body{background:#f4fbff;color:#0f2537}header{background:linear-gradient(145deg,#fff,#eaf8ff)}p{color:#557086}input,.card{background:#fff;color:#0f2537;border-color:rgba(3,105,161,.18)}h2{color:#0369a1}.tag{background:#dcfce7;color:#166534}}</style></head><body><header><div class="wrap"><h1>CMCSix Hospitals · Dashboard Hilfe</h1><p>Durchsuche die aktuelle Dokumentation zu Dashboard, Kartenansicht, Verwaltung, Filtern, Datenstand und Use Cases.</p><input id="q" placeholder="Suchen, z. B. Bettentyp, Karte, freie Betten, Verwaltung, Datenstand ..." autofocus></div></header><main class="wrap"><div id="cards" class="grid">'+cards.map(function(c){return '<section class="card" data-search="'+c.join(' ').toLowerCase().replace(/"/g,'')+'"><h2>'+c[0]+'</h2><p>'+c[1]+'</p><span class="tag">Dokumentation</span></section>'}).join('')+'</div><div id="empty" class="empty">Keine Treffer gefunden.</div></main><script>var q=document.getElementById("q"),cards=[].slice.call(document.querySelectorAll(".card")),empty=document.getElementById("empty");q.addEventListener("input",function(){var s=q.value.toLowerCase().trim(),n=0;cards.forEach(function(c){var show=!s||c.dataset.search.indexOf(s)>-1;c.style.display=show?"block":"none";if(show)n++});empty.style.display=n?"none":"block"});<\/script></body></html>';
+  }
+  window.openCmcsixDashboardHelp=function(){
+    var w=window.open('','cmcsixDashboardHelp','width=980,height=760,scrollbars=yes,resizable=yes');
+    if(!w){alert('Bitte Pop-ups erlauben, um die Dashboard-Hilfe zu öffnen.');return;}
+    w.document.open();
+    w.document.write(helpHtml());
+    w.document.close();
+  };
+  function bind(){
+    var btn=document.getElementById('dashboardHelpButton');
+    if(btn)btn.onclick=window.openCmcsixDashboardHelp;
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+})();
