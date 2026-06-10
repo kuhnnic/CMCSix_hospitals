@@ -11,6 +11,17 @@
 <link rel="stylesheet" href="../assets/dashboard-hospital-detail.css?v=dashboard-hospital-aggregate">
 <link rel="stylesheet" href="../assets/dashboard-cmc-theme.css?v=dashboard-hospital-aggregate">
 <link rel="stylesheet" href="../assets/dashboard-map.css?v=dashboard-hospital-aggregate">
+<style>
+  .dash-shell .top-filter-panel{position:relative;top:auto;display:grid;gap:16px;margin:18px 0 18px;padding:18px;border-radius:26px;background:var(--panel,#fff);border:1px solid var(--line,rgba(15,118,110,.18));box-shadow:0 20px 60px rgba(13,63,58,.12)}
+  .dash-shell .top-filter-panel .panel-title{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0}
+  .dash-shell .top-filter-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:end}
+  .dash-shell .top-filter-grid label,.dash-shell .top-filter-grid .feature-field{min-width:0;margin:0}
+  .dash-shell .top-filter-grid .feature-field{display:grid;gap:7px}
+  .dash-shell .dashboard-main.full-width{width:100%;min-width:0}
+  .dash-shell .dash-grid.top-filter-layout{display:block}
+  @media(max-width:1180px){.dash-shell .top-filter-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(max-width:760px){.dash-shell .top-filter-panel{padding:14px;border-radius:22px}.dash-shell .top-filter-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <main class="dash-shell">
@@ -30,17 +41,19 @@
     <a class="active" href="../dashboard-hospital-contacts.html">Spitalkontakte bearbeiten</a>
   </nav>
 </header>
-<section class="dash-grid">
-  <aside class="control-panel">
-    <div class="panel-title"><span>Filter</span><button id="resetFilters" type="button">Zurücksetzen</button></div>
+<section class="control-panel top-filter-panel" aria-label="Filter">
+  <div class="panel-title"><span>Filter</span><button id="resetFilters" type="button">Zurücksetzen</button></div>
+  <div class="top-filter-grid">
     <label>Gültigkeitsgebiet<select id="validity"><option value="all">Alle Gültigkeitsgebiete</option></select></label>
     <label>Spital<select id="hospital"><option value="all">Alle Spitäler</option></select></label>
     <label>Fachgebiet<select id="specialty"><option value="all">Alle Fachgebiete</option></select></label>
     <label>Geschlecht<select id="gender"><option value="all">Alle Geschlechter</option></select></label>
     <div class="feature-field"><span>Eigenschaft</span><div id="featureMulti" class="feature-checks"></div></div>
     <label>Suche<input id="search" placeholder="Spital, Fachgebiet, Gültigkeitsgebiet"></label>
-  </aside>
-  <section class="dashboard-main">
+  </div>
+</section>
+<section class="dash-grid top-filter-layout">
+  <section class="dashboard-main full-width">
     <section id="metrics" class="metric-strip"></section>
     <section class="status-band"><div class="band-title"><span>Verfügbarkeit</span><small id="contextLabel">Nur freie Betten · Aggregation pro Spital</small></div><div id="statusBars" class="status-bars"></div></section>
     <section id="mapCard" class="table-card hospital-map-card" hidden><div class="table-toolbar"><div><span class="dash-kicker">Kartenansicht</span><h2>Spitäler auf der Karte</h2></div><small>Spital anklicken, um in der Hauptansicht danach zu filtern</small></div><div id="hospitalMap" aria-live="polite"></div></section>
